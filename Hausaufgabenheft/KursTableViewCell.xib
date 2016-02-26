@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="kursTableViewCell" id="KGk-i7-Jjw" customClass="KursTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mathe Leistungskurs 2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wcl-wD-Do1">
+                        <rect key="frame" x="51" y="8" width="261" height="19"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="19" id="Uz9-gD-K2k"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7hD-Hz-M4T">
+                        <rect key="frame" x="0.0" y="0.0" width="43.5" height="43.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="43.5" id="g2n-oW-Hzh"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Frau Pillen" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fFh-dL-vbg">
+                        <rect key="frame" x="51" y="27" width="261" height="16"/>
+                        <fontDescription key="fontDescription" type="system" weight="ultraLight" pointSize="14"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="7hD-Hz-M4T" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-8" id="NYy-3j-neh"/>
+                    <constraint firstItem="fFh-dL-vbg" firstAttribute="leading" secondItem="7hD-Hz-M4T" secondAttribute="trailing" constant="7.5" id="OqR-kw-lZ9"/>
+                    <constraint firstItem="fFh-dL-vbg" firstAttribute="top" secondItem="Wcl-wD-Do1" secondAttribute="bottom" id="Qgu-ed-Nmk"/>
+                    <constraint firstItem="Wcl-wD-Do1" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="Ri4-ck-kuu"/>
+                    <constraint firstItem="Wcl-wD-Do1" firstAttribute="leading" secondItem="7hD-Hz-M4T" secondAttribute="trailing" constant="7.5" id="Vdk-dF-wIb"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="7hD-Hz-M4T" secondAttribute="bottom" constant="-8" id="Xcr-r3-DvK"/>
+                    <constraint firstItem="Wcl-wD-Do1" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="YXm-Dj-Vcr"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="fFh-dL-vbg" secondAttribute="bottom" constant="-7.5" id="kw2-DT-f4O"/>
+                    <constraint firstItem="7hD-Hz-M4T" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-8" id="xou-kp-6ZQ"/>
+                    <constraint firstItem="fFh-dL-vbg" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="yzz-KV-JU1"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="kursIconImageView" destination="7hD-Hz-M4T" id="2rK-tz-xLz"/>
+                <outlet property="kursNameLabel" destination="Wcl-wD-Do1" id="ZLn-Pc-F4R"/>
+                <outlet property="lehrerNameLabel" destination="fFh-dL-vbg" id="ndS-Ga-W5k"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+</document>

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8150" systemVersion="15A204g" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8122"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -13,15 +15,64 @@
                         <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <animations/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="ICX-P0-9Kf">
+                                <rect key="frame" x="-4" y="120" width="328" height="328"/>
+                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="ICX-P0-9Kf" secondAttribute="height" multiplier="1:1" id="NEm-o4-UhX"/>
+                                    <constraint firstAttribute="width" secondItem="ICX-P0-9Kf" secondAttribute="height" multiplier="1:1" id="wGj-Qz-HtZ"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="NEm-o4-UhX"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=regular">
+                                    <mask key="constraints">
+                                        <include reference="NEm-o4-UhX"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.84313725490196079" green="0.90588235294117647" blue="0.97647058823529409" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="ICX-P0-9Kf" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="PKl-2C-3zE"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="ICX-P0-9Kf" secondAttribute="bottom" id="aia-Jc-iLT"/>
+                            <constraint firstItem="ICX-P0-9Kf" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="-20" id="brw-Iw-G4Y"/>
+                            <constraint firstItem="ICX-P0-9Kf" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="12" id="gIL-XH-BXO"/>
+                            <constraint firstItem="ICX-P0-9Kf" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="nxs-LV-f8O"/>
+                            <constraint firstItem="ICX-P0-9Kf" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="qeq-xM-Xgp"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ICX-P0-9Kf" secondAttribute="trailing" constant="-20" id="ugi-im-T0d"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="gIL-XH-BXO"/>
+                                <exclude reference="qeq-xM-Xgp"/>
+                                <exclude reference="aia-Jc-iLT"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=regular">
+                            <mask key="constraints">
+                                <exclude reference="PKl-2C-3zE"/>
+                                <exclude reference="brw-Iw-G4Y"/>
+                                <include reference="gIL-XH-BXO"/>
+                                <exclude reference="qeq-xM-Xgp"/>
+                                <exclude reference="ugi-im-T0d"/>
+                                <include reference="aia-Jc-iLT"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="52.5" y="375"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Logo.png" width="4167" height="4167"/>
+    </resources>
 </document>

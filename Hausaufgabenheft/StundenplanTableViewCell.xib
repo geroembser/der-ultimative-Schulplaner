@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="stundenplanTableViewCell" rowHeight="50" id="KGk-i7-Jjw" customClass="StundenplanTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="49.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zNt-Cl-cPX">
+                        <rect key="frame" x="280" y="5" width="40" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="8Fa-rK-qPc"/>
+                            <constraint firstAttribute="width" constant="40" id="I39-cw-t1E"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mathe Leistungskurs 1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P05-Ah-JSE">
+                        <rect key="frame" x="51" y="0.0" width="221" height="27"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="27" id="K4E-WC-aSX"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Frau Pillen" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MCI-l7-rMv">
+                        <rect key="frame" x="51" y="27" width="160" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="yuA-sd-okQ"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" weight="ultraLight" pointSize="14"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bkw-L2-YfM">
+                        <rect key="frame" x="0.0" y="-1" width="49.5" height="49.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="49.5" id="v1z-Mk-WN7"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="33"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kapelle" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GRo-7E-PSs">
+                        <rect key="frame" x="215" y="27" width="65" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="65" id="hHz-wC-4O9"/>
+                            <constraint firstAttribute="height" constant="21" id="sh8-qA-caP"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="P05-Ah-JSE" firstAttribute="leading" secondItem="Bkw-L2-YfM" secondAttribute="trailing" constant="1.5" id="0jc-D2-X2t"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="Bkw-L2-YfM" secondAttribute="bottom" constant="-7" id="7Kk-XQ-qCT"/>
+                    <constraint firstItem="GRo-7E-PSs" firstAttribute="leading" secondItem="MCI-l7-rMv" secondAttribute="trailing" constant="4" id="BbO-9u-hab"/>
+                    <constraint firstItem="MCI-l7-rMv" firstAttribute="leading" secondItem="Bkw-L2-YfM" secondAttribute="trailing" constant="1.5" id="Fmb-QS-flj"/>
+                    <constraint firstItem="zNt-Cl-cPX" firstAttribute="leading" secondItem="P05-Ah-JSE" secondAttribute="trailing" constant="8" id="OnW-Ib-xPQ"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="GRo-7E-PSs" secondAttribute="bottom" constant="-6.5" id="lVU-5i-xfd"/>
+                    <constraint firstItem="zNt-Cl-cPX" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="ljK-10-FEj"/>
+                    <constraint firstItem="zNt-Cl-cPX" firstAttribute="leading" secondItem="GRo-7E-PSs" secondAttribute="trailing" id="s1R-pd-bLu"/>
+                    <constraint firstItem="Bkw-L2-YfM" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-8" id="tEu-SP-bef"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="zNt-Cl-cPX" secondAttribute="trailing" constant="-8" id="vdg-8c-qFU"/>
+                    <constraint firstItem="Bkw-L2-YfM" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-9" id="w4N-0d-oke"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="MCI-l7-rMv" secondAttribute="bottom" constant="-6.5" id="wrv-XK-eeq"/>
+                    <constraint firstItem="P05-Ah-JSE" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-8" id="xfB-9g-nqt"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="fachNameLabel" destination="P05-Ah-JSE" id="a8g-xX-KxS"/>
+                <outlet property="kursImageView" destination="zNt-Cl-cPX" id="An3-Ag-vHG"/>
+                <outlet property="lehrerNameLabel" destination="MCI-l7-rMv" id="Rkk-nS-FU6"/>
+                <outlet property="raumLabel" destination="GRo-7E-PSs" id="p8i-bT-rY3"/>
+                <outlet property="stundenNummerLabel" destination="Bkw-L2-YfM" id="HAa-FP-okr"/>
+            </connections>
+            <point key="canvasLocation" x="309" y="348"/>
+        </tableViewCell>
+    </objects>
+</document>
