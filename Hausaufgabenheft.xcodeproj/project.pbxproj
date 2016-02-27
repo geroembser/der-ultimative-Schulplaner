@@ -1326,7 +1326,7 @@
 				6BE9FFCD1C77C69800C100CC /* Hausaufgabenheft 2.xcdatamodel */,
 				6B23E26C1C10DBDB00E501E7 /* Hausaufgabenheft.xcdatamodel */,
 			);
-			currentVersion = 6BE9FFCD1C77C69800C100CC /* Hausaufgabenheft 2.xcdatamodel */;
+			currentVersion = 6B2C3A3A1C7921F700E55AF3 /* Hausaufgabenheft 3.xcdatamodel */;
 			path = Hausaufgabenheft.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

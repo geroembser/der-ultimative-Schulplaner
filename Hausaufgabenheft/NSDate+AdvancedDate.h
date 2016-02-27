@@ -19,4 +19,10 @@
 - (SchulstundeWochentag)wochentag;
 
 
+///gibt einen String vom Datum in dem Format: "01.02.2016" zurück
+- (NSString *)datumStringAlleine;
+
+///gibt einen String vom Datum und von der Uhrzeit zurück (in dem Format: "11.12.2015, 10.25 Uhr")
+- (NSString *)datumUndUhrzeitString;
+
 @end

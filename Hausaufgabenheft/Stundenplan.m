@@ -405,7 +405,10 @@
             
 //            if ((!self.user.lastVertretungsplanUpdate) || [newDate compare:self.user.lastVertretungsplanUpdate] == NSOrderedDescending) {
                 self.user.lastVertretungsplanUpdate = newDate;
-                
+            
+                //setzte das Datum, wann die letzte Verbindung zum "Vertretunsplan-Server" war
+                self.user.lastVertretungsplanConnection = [NSDate date];
+            
                 //wenn dann neue Daten verfügbar sind, dann lösche alle alten Vertretungsstunden
                 NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Vertretung"];
                 NSBatchDeleteRequest *delete = [[NSBatchDeleteRequest alloc] initWithFetchRequest:request];
@@ -478,8 +481,8 @@
                         
                     }
                     
-//                }
-                
+                }
+            
                 //speichern
                 NSError *savingError;
                 [self.user.managedObjectContext save:&savingError];
@@ -493,8 +496,7 @@
                 if ([self.delegate respondsToSelector:@selector(didRefreshStundenplan:)]) {
                     [self.delegate didRefreshStundenplan:self];
                 }
-                
-            }
+            
         }
     }
 }

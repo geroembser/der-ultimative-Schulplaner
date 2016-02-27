@@ -14,7 +14,8 @@
 #import "NSDate+AdvancedDate.h"
 
 @interface StundenplanViewController () <StundenplanDelegate>
-
+///das Refresh-Control-Element vom TableView, um den Vertretungsplan zu aktualisieren (eine Variable in dieser Instanz wird benötigt, damit man in der didRefreshStundenplan-Delegate-Methode auf dieses Kontrollelement zugreifen kann, um es auszublenden, also anzuzeigen, dass der Aktualisierungsprozess abgeschlossen wurde)
+@property UIRefreshControl *refreshControl;
 @end
 
 @implementation StundenplanViewController
@@ -25,6 +26,12 @@
     
     //Die TableViewCell für den TableView als Nib-File "registrieren"
     [self.tableView registerNib:[UINib nibWithNibName:@"StundenplanTableViewCell" bundle:nil] forCellReuseIdentifier:@"stundenplanTableViewCell"];
+    
+    //dem TableView ein Refresh-Control hinzufügen
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(refreshVertretungsplan:) forControlEvents:UIControlEventValueChanged];
+    
+    [self.tableView addSubview:self.refreshControl];
     
     //den Benutzer standardmäßig auf den Default-User setzen
     self.associatedUser = [User defaultUser];
@@ -46,6 +53,9 @@
     //den aktuell angezeigten Wochentag auf den des aktuellen Tags setzen, oder den nächsten Schultag (bei Samstag oder Sonntag als Wochentag)
     self.aktuellAngezeigterWochentag = (int)(weekday-1); //das konfiguriert schon den FetchedResultsController; weekday-1, weil Montag = 1 ist --> wir beginnen in der App mit Montag = 0
     
+    
+    //das Datum der letzten Aktualisierung des Vertretungsplans aktualisieren
+    [self aktualisiereLabelMitDatumLetzteVertretungsplanVerbindung];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -204,6 +214,11 @@
     self.vertretungenDateLabel.text = textForLabel;
 }
 
+///diese Methode sollte durch ein UIRefreshControl aufgerufen werden, wenn der User möchte, dass der TableView neugeladen werden soll --> eigentlich sollt damit nur der Vertretungsplan aktualisiert werden
+- (void)refreshVertretungsplan:(UIRefreshControl *)refreshControl {
+    //den Vertretungsplan aktualisieren
+    [self.stundenplan aktualisiereVertretungen];
+}
 
 
 #pragma mark - Methoden-Einstellungen-Stundenplan
@@ -225,6 +240,21 @@
     
     //das Wochentag-Objekt für den aktuell ausgewählten Wochentag vom Stundenplan bekommen und es entsprechend der Instanzvariable bzw. Property zuweisen
     self.aktuellAngezeigterWochentagObjekt = [self.stundenplan wochentagFuerIndex:self.aktuellAngezeigterWochentag];
+}
+
+///aktualisiert den Text in dem Label, was anzeigt, wann der Vertretungsplan zuletzt aktualisiert wurde
+- (void)aktualisiereLabelMitDatumLetzteVertretungsplanVerbindung {
+    //der String vom Datum der letzten Verbindung zum Vertretungsplan
+    NSString *timeString = [self.stundenplan.user.lastVertretungsplanConnection datumUndUhrzeitString];
+    
+    //wenn der String leer ist oder "ungültig", dann zeige an, "letzte Aktualisierung: noch nie"
+    if (timeString.length > 0 && ![timeString isEqualToString:@""]) {
+        self.vertretungsplanLetzeAktualisierungLabel.text = [NSString stringWithFormat:@"letzte Aktualisierung: %@", timeString];
+    }
+    else {
+        self.vertretungsplanLetzeAktualisierungLabel.text = @"letzte Aktualisierung: noch nie";
+    }
+    
 }
 
 #pragma mark - user interface actions
@@ -267,8 +297,10 @@
         [self.tableView reloadData];
         
         //das Datum der letzten Aktualisierung des Vertretungsplans aktualisieren
+        [self aktualisiereLabelMitDatumLetzteVertretungsplanVerbindung];
         
-        
+        //beim Refresh-Control-Element den Aktualisieren-Effekt beenden
+        [self.refreshControl endRefreshing];
     });
     
     

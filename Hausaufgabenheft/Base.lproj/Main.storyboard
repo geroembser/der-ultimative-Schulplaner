@@ -1071,8 +1071,8 @@ Viel Spaß!!!
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FOF-Wg-grp">
-                                                <rect key="frame" x="8" y="154" width="592" height="30"/>
+                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FOF-Wg-grp">
+                                                <rect key="frame" x="4" y="285" width="592" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="WR0-jP-D8Z"/>
                                                 </constraints>
