@@ -187,4 +187,8 @@
     }
 }
 
+- (NSString *)fullName {
+    return [NSString stringWithFormat:@"%@ %@", self.vorname, self.nachname];
+}
+
 @end

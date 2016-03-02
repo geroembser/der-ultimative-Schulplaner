@@ -11,6 +11,7 @@
 #import "User.h"
 #import "ServerUserDataController.h"
 #import "AppDelegate.h"
+#import "QuizController.h"
 
 @interface EinstellungenTableViewController ()
 
@@ -163,5 +164,25 @@
     //den alertController anzeigen
     [self.navigationController presentViewController:alertController animated:YES completion:nil];
     
+}
+
+#pragma mark Bereich: Quiz
+- (IBAction)quizfragenLoeschenButtonClicked:(id)sender {
+    //nachfragen, ob wirklich alle Quizfragen gelöscht werden sollen
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Wirklich fortfahren?" message:@"Möchtest du wirklich alle auf diesem Gerät gespeicherten Quiz-Fragen für deine Kurse löschen? Später kannst du sie erneut aus dem Internet herunterladen!" preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    //abmelden-Action für den alertController
+    [alertController addAction:[UIAlertAction actionWithTitle:@"alle Quizfragen löschen" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        //hier der Code für das Löschen aller Quizfragen
+        QuizController *quizController = [QuizController defaultQuizController];
+        
+        [quizController loescheAlleQuizfragenDesBenutzers];
+    }]];
+    
+    //cancel-Action für den Alert-Controller
+    [alertController addAction:[UIAlertAction actionWithTitle:@"abbrechen und weiter lernen 👍" style:UIAlertActionStyleCancel handler:nil]];
+    
+    //den alertController anzeigen
+    [self.navigationController presentViewController:alertController animated:YES completion:nil];
 }
 @end

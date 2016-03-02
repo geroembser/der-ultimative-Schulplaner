@@ -20,19 +20,23 @@
 // Insert code here to add functionality to your managed object subclass
 
 + (NSArray<Kurs *> *)vorhandeneKurseFuerID:(NSString *)kursID inManagedObjectContext:(NSManagedObjectContext *)context {
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Kurs" inManagedObjectContext:context];
-    [fetchRequest setEntity:entity];
-    // Specify criteria for filtering which objects to fetch
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"id like %@", kursID];
-    [fetchRequest setPredicate:predicate];
-    
-    NSError *error = nil;
-    NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
-    if (fetchedObjects == nil || fetchedObjects.count < 1) {
-        return nil;
+    //nur, wenn eine Kurs-ID und ein managedObjectContext gegeben ist
+    if (kursID && context) {
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Kurs" inManagedObjectContext:context];
+        [fetchRequest setEntity:entity];
+        // Specify criteria for filtering which objects to fetch
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"id like %@", kursID];
+        [fetchRequest setPredicate:predicate];
+        
+        NSError *error = nil;
+        NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+        if (fetchedObjects == nil || fetchedObjects.count < 1) {
+            return nil;
+        }
+        return fetchedObjects;
     }
-    return fetchedObjects;
+    return nil;
 }
 
 + (Kurs *)vorhandenerKursFuerID:(NSString *)kursID inManagedObjectContext:(NSManagedObjectContext *)context {
@@ -47,17 +51,20 @@
 }
 
 + (Kurs *)kursFuerID:(NSString *)kursID inManagedObjectContext:(NSManagedObjectContext *)context {
-    
-    //erst überprüfen, ob bereits in der Datenbank ein Kurs mit der übergebenen ID vorhanden ist
-    Kurs *vorhandenerKurs = [Kurs vorhandenerKursFuerID:kursID inManagedObjectContext:context];
-    
-    if (vorhandenerKurs == nil) {
-        //neues Kurse Objekt erstellen und zurückgeben
-        return [Kurs neuerKursMitKursID:kursID inManagedObjectContext:context];
+    //nur wenn ein Kurs und ein ManagedObjectContext gegeben ist
+    if (kursID && context) {
+        //erst überprüfen, ob bereits in der Datenbank ein Kurs mit der übergebenen ID vorhanden ist
+        Kurs *vorhandenerKurs = [Kurs vorhandenerKursFuerID:kursID inManagedObjectContext:context];
+        
+        if (vorhandenerKurs == nil) {
+            //neues Kurse Objekt erstellen und zurückgeben
+            return [Kurs neuerKursMitKursID:kursID inManagedObjectContext:context];
+        }
+        
+        //ansonsten das vorhandene Kurs-Objekt zurückgeben
+        return vorhandenerKurs;
     }
-    
-    //ansonsten das vorhandene Kurs-Objekt zurückgeben
-    return vorhandenerKurs;
+    return nil;
 }
 
 #pragma mark - neue Kurs-Objekte erstellen

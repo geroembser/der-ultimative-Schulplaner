@@ -272,8 +272,8 @@
             if ([datum compare:stundenbeginn] == NSOrderedDescending) {
                 
                 Stunde *aktiveSchulstunde = [self stundeFuerWochentag:(int)weekday undStunde:i];
-                
-                if (!aktiveSchulstunde) {
+                //Freistunden in diesem Fall auch nicht beachten
+                if (!aktiveSchulstunde || aktiveSchulstunde.freistunde) {
                      //falls es keine aktuell aktive Stunde gibt, gib die nächste Stunde zurück, wenn es eine gibt und gerade keine Freistunde ist (die aufgerufene Methode gibt keine Freistunde zurück)
                     return [self naechsteSchulstundeNachWochentag:(int)weekday undStunde:i];
                 }

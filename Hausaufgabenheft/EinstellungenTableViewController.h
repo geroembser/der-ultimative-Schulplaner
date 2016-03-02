@@ -24,4 +24,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *abmeldenButton;
 - (IBAction)logoutButtonClicked:(id)sender;
 
+
+#pragma mark - Quiz
+- (IBAction)quizfragenLoeschenButtonClicked:(id)sender;
+
 @end

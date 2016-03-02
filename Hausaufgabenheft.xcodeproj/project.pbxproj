@@ -8,6 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		6B0054901C3176FB00BE862D /* FinishedSetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B00548F1C3176FB00BE862D /* FinishedSetupViewController.m */; };
+		6B03176E1C81EB040099BF93 /* QuizOverviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B03176D1C81EB040099BF93 /* QuizOverviewViewController.m */; };
+		6B0317721C81ED110099BF93 /* DownloadQuizFragenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B0317711C81ED110099BF93 /* DownloadQuizFragenViewController.m */; };
+		6B0317751C81EF220099BF93 /* QuizController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B0317741C81EF220099BF93 /* QuizController.m */; };
+		6B0317861C8307C50099BF93 /* Antwort+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B03177B1C8307C50099BF93 /* Antwort+CoreDataProperties.m */; };
+		6B0317871C8307C50099BF93 /* Antwort.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B03177D1C8307C50099BF93 /* Antwort.m */; };
+		6B0317881C8307C50099BF93 /* Frage+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B03177F1C8307C50099BF93 /* Frage+CoreDataProperties.m */; };
+		6B0317891C8307C50099BF93 /* Frage.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B0317811C8307C50099BF93 /* Frage.m */; };
+		6B03178A1C8307C50099BF93 /* Themenbereich+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B0317831C8307C50099BF93 /* Themenbereich+CoreDataProperties.m */; };
+		6B03178B1C8307C50099BF93 /* Themenbereich.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B0317851C8307C50099BF93 /* Themenbereich.m */; };
 		6B06139C1BD96C7A00E7062B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B06139B1BD96C7A00E7062B /* main.m */; };
 		6B06139F1BD96C7A00E7062B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B06139E1BD96C7A00E7062B /* AppDelegate.m */; };
 		6B0613A81BD96C7A00E7062B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B0613A61BD96C7A00E7062B /* Main.storyboard */; };
@@ -18,6 +27,8 @@
 		6B0613D31BD96EB800E7062B /* IntroPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B0613D21BD96EB800E7062B /* IntroPageViewController.m */; };
 		6B0613D61BD96ED800E7062B /* IntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B0613D51BD96ED800E7062B /* IntroViewController.m */; };
 		6B0613D91BD9850800E7062B /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B0613D81BD9850800E7062B /* WelcomeViewController.m */; };
+		6B1F6E0F1C86284C007A5ADF /* Quiz-cancel-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B1F6E0E1C86284C007A5ADF /* Quiz-cancel-button.png */; };
+		6B1F6E111C862CB9007A5ADF /* Quiz-Unterstrich-Tafel-Styl.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B1F6E101C862CB9007A5ADF /* Quiz-Unterstrich-Tafel-Styl.png */; };
 		6B2233561C6BD06A00D26032 /* Tafel.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 6B2233551C6BD06A00D26032 /* Tafel.JPG */; };
 		6B2233581C6BDC3E00D26032 /* IMG_6363.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 6B2233571C6BDC3E00D26032 /* IMG_6363.JPG */; };
 		6B23E26D1C10DBDB00E501E7 /* Hausaufgabenheft.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6B23E26B1C10DBDB00E501E7 /* Hausaufgabenheft.xcdatamodeld */; };
@@ -27,9 +38,13 @@
 		6B2A2E491C302270001ACA5B /* WebsiteTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B2A2E461C302270001ACA5B /* WebsiteTag.m */; };
 		6B2A2E511C307294001ACA5B /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B2A2E4E1C307294001ACA5B /* GTMNSString+HTML.m */; };
 		6B2A2E521C307294001ACA5B /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B2A2E501C307294001ACA5B /* NSString+HTML.m */; };
+		6B2EAB1D1C84B12300B0ED05 /* NSMutableArray+Shuffling.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B2EAB1C1C84B12300B0ED05 /* NSMutableArray+Shuffling.m */; };
+		6B2EAB241C84E15300B0ED05 /* AntwortButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B2EAB231C84E15300B0ED05 /* AntwortButton.m */; };
 		6B3F826C1C3D856D00728D7C /* WebNewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B3F826B1C3D856D00728D7C /* WebNewsViewController.m */; };
 		6B3F826F1C3D9B1100728D7C /* News.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B3F826E1C3D9B1100728D7C /* News.m */; };
 		6B3F82721C3EF17600728D7C /* WebNewsDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B3F82711C3EF17600728D7C /* WebNewsDetailViewController.m */; };
+		6B5095BE1C834AEE00BADDC1 /* Quiz.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B5095BD1C834AEE00BADDC1 /* Quiz.m */; };
+		6B5095C11C834B2400BADDC1 /* QuizKurseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B5095C01C834B2400BADDC1 /* QuizKurseTableViewController.m */; };
 		6B58F1101C3D820E006149BA /* NewsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B58F10E1C3D820E006149BA /* NewsTableViewCell.m */; };
 		6B58F1111C3D820E006149BA /* NewsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B58F10F1C3D820E006149BA /* NewsTableViewCell.xib */; };
 		6B58F1141C3D8319006149BA /* NewsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B58F1131C3D8319006149BA /* NewsController.m */; };
@@ -81,6 +96,9 @@
 		6BB403CB1C16BBA300B5323E /* KurseController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BB403CA1C16BBA300B5323E /* KurseController.m */; };
 		6BB403E61C19F18E00B5323E /* StundenplanController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BB403E51C19F18E00B5323E /* StundenplanController.m */; };
 		6BB403E91C19F45D00B5323E /* Stundenplan.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BB403E81C19F45D00B5323E /* Stundenplan.m */; };
+		6BBA2C961C83590900CDEDFE /* QuizAbfrageNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BBA2C951C83590900CDEDFE /* QuizAbfrageNavController.m */; };
+		6BBA2C991C83817C00CDEDFE /* QuizPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BBA2C981C83817C00CDEDFE /* QuizPageViewController.m */; };
+		6BBA2C9C1C8386A100CDEDFE /* QuizfrageAbfrageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BBA2C9B1C8386A100CDEDFE /* QuizfrageAbfrageViewController.m */; };
 		6BBBC6B41C4E31B20029E7B0 /* KursDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BBBC6B31C4E31B10029E7B0 /* KursDetailViewController.m */; };
 		6BBBC6B91C4FE2920029E7B0 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BBBC6B81C4FE2920029E7B0 /* MessageUI.framework */; };
 		6BBBC6BC1C4FE2AD0029E7B0 /* TeacherEmailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BBBC6BB1C4FE2AD0029E7B0 /* TeacherEmailController.m */; };
@@ -100,6 +118,8 @@
 		6BDFD0D61C0CE14300F4E333 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BDFD0D41C0CE14300F4E333 /* User.m */; };
 		6BDFD0E81C0CEF4A00F4E333 /* ServerUserDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BDFD0E71C0CEF4A00F4E333 /* ServerUserDataController.m */; };
 		6BE9FFC91C77B89A00C100CC /* EinstellungenTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BE9FFC81C77B89A00C100CC /* EinstellungenTableViewController.m */; };
+		6BEB5BDD1C87457400828744 /* QuizErgebnisViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BEB5BDC1C87457400828744 /* QuizErgebnisViewController.m */; };
+		6BEB5BE01C8748C700828744 /* QuizErgebnisFrageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BEB5BDF1C8748C700828744 /* QuizErgebnisFrageTableViewCell.m */; };
 		6BF988C11C34368000DE1167 /* Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BF988C01C34368000DE1167 /* Logo.png */; };
 		6BFD03D11C5D15540088A68F /* PhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BFD03D01C5D15540088A68F /* PhotoViewController.m */; };
 		6BFD03D41C5D15AF0088A68F /* MediaFilesDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BFD03D31C5D15AF0088A68F /* MediaFilesDetailViewController.m */; };
@@ -126,6 +146,26 @@
 /* Begin PBXFileReference section */
 		6B00548E1C3176FB00BE862D /* FinishedSetupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FinishedSetupViewController.h; sourceTree = "<group>"; };
 		6B00548F1C3176FB00BE862D /* FinishedSetupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FinishedSetupViewController.m; sourceTree = "<group>"; };
+		6B03176C1C81EB040099BF93 /* QuizOverviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuizOverviewViewController.h; sourceTree = "<group>"; };
+		6B03176D1C81EB040099BF93 /* QuizOverviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuizOverviewViewController.m; sourceTree = "<group>"; };
+		6B0317701C81ED110099BF93 /* DownloadQuizFragenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadQuizFragenViewController.h; sourceTree = "<group>"; };
+		6B0317711C81ED110099BF93 /* DownloadQuizFragenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadQuizFragenViewController.m; sourceTree = "<group>"; };
+		6B0317731C81EF220099BF93 /* QuizController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuizController.h; sourceTree = "<group>"; };
+		6B0317741C81EF220099BF93 /* QuizController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuizController.m; sourceTree = "<group>"; };
+		6B0317761C8207800099BF93 /* Hausaufgabenheft 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Hausaufgabenheft 4.xcdatamodel"; sourceTree = "<group>"; };
+		6B03177A1C8307C50099BF93 /* Antwort+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Antwort+CoreDataProperties.h"; sourceTree = "<group>"; };
+		6B03177B1C8307C50099BF93 /* Antwort+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Antwort+CoreDataProperties.m"; sourceTree = "<group>"; };
+		6B03177C1C8307C50099BF93 /* Antwort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Antwort.h; sourceTree = "<group>"; };
+		6B03177D1C8307C50099BF93 /* Antwort.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Antwort.m; sourceTree = "<group>"; };
+		6B03177E1C8307C50099BF93 /* Frage+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Frage+CoreDataProperties.h"; sourceTree = "<group>"; };
+		6B03177F1C8307C50099BF93 /* Frage+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Frage+CoreDataProperties.m"; sourceTree = "<group>"; };
+		6B0317801C8307C50099BF93 /* Frage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Frage.h; sourceTree = "<group>"; };
+		6B0317811C8307C50099BF93 /* Frage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Frage.m; sourceTree = "<group>"; };
+		6B0317821C8307C50099BF93 /* Themenbereich+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Themenbereich+CoreDataProperties.h"; sourceTree = "<group>"; };
+		6B0317831C8307C50099BF93 /* Themenbereich+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Themenbereich+CoreDataProperties.m"; sourceTree = "<group>"; };
+		6B0317841C8307C50099BF93 /* Themenbereich.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Themenbereich.h; sourceTree = "<group>"; };
+		6B0317851C8307C50099BF93 /* Themenbereich.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Themenbereich.m; sourceTree = "<group>"; };
+		6B03178C1C830E460099BF93 /* Hausaufgabenheft 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Hausaufgabenheft 5.xcdatamodel"; sourceTree = "<group>"; };
 		6B0613971BD96C7A00E7062B /* Hausaufgabenheft.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hausaufgabenheft.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B06139B1BD96C7A00E7062B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		6B06139D1BD96C7A00E7062B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -148,6 +188,8 @@
 		6B0613D81BD9850800E7062B /* WelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeViewController.m; sourceTree = "<group>"; };
 		6B0613DA1BD9876D00E7062B /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
 		6B0613DB1BD9876D00E7062B /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		6B1F6E0E1C86284C007A5ADF /* Quiz-cancel-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Quiz-cancel-button.png"; sourceTree = "<group>"; };
+		6B1F6E101C862CB9007A5ADF /* Quiz-Unterstrich-Tafel-Styl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Quiz-Unterstrich-Tafel-Styl.png"; sourceTree = "<group>"; };
 		6B2233551C6BD06A00D26032 /* Tafel.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Tafel.JPG; sourceTree = "<group>"; };
 		6B2233571C6BDC3E00D26032 /* IMG_6363.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IMG_6363.JPG; sourceTree = "<group>"; };
 		6B23E26C1C10DBDB00E501E7 /* Hausaufgabenheft.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Hausaufgabenheft.xcdatamodel; sourceTree = "<group>"; };
@@ -164,12 +206,21 @@
 		6B2A2E4F1C307294001ACA5B /* NSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HTML.h"; sourceTree = "<group>"; };
 		6B2A2E501C307294001ACA5B /* NSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+HTML.m"; sourceTree = "<group>"; };
 		6B2C3A3A1C7921F700E55AF3 /* Hausaufgabenheft 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Hausaufgabenheft 3.xcdatamodel"; sourceTree = "<group>"; };
+		6B2EAB1B1C84B12300B0ED05 /* NSMutableArray+Shuffling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Shuffling.h"; sourceTree = "<group>"; };
+		6B2EAB1C1C84B12300B0ED05 /* NSMutableArray+Shuffling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Shuffling.m"; sourceTree = "<group>"; };
+		6B2EAB1E1C84B76300B0ED05 /* Hausaufgabenheft 6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Hausaufgabenheft 6.xcdatamodel"; sourceTree = "<group>"; };
+		6B2EAB221C84E15300B0ED05 /* AntwortButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AntwortButton.h; sourceTree = "<group>"; };
+		6B2EAB231C84E15300B0ED05 /* AntwortButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AntwortButton.m; sourceTree = "<group>"; };
 		6B3F826A1C3D856D00728D7C /* WebNewsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebNewsViewController.h; sourceTree = "<group>"; };
 		6B3F826B1C3D856D00728D7C /* WebNewsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebNewsViewController.m; sourceTree = "<group>"; };
 		6B3F826D1C3D9B1100728D7C /* News.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = News.h; sourceTree = "<group>"; };
 		6B3F826E1C3D9B1100728D7C /* News.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = News.m; sourceTree = "<group>"; };
 		6B3F82701C3EF17600728D7C /* WebNewsDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebNewsDetailViewController.h; sourceTree = "<group>"; };
 		6B3F82711C3EF17600728D7C /* WebNewsDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebNewsDetailViewController.m; sourceTree = "<group>"; };
+		6B5095BC1C834AEE00BADDC1 /* Quiz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Quiz.h; sourceTree = "<group>"; };
+		6B5095BD1C834AEE00BADDC1 /* Quiz.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Quiz.m; sourceTree = "<group>"; };
+		6B5095BF1C834B2400BADDC1 /* QuizKurseTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuizKurseTableViewController.h; sourceTree = "<group>"; };
+		6B5095C01C834B2400BADDC1 /* QuizKurseTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuizKurseTableViewController.m; sourceTree = "<group>"; };
 		6B58F10D1C3D820E006149BA /* NewsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsTableViewCell.h; sourceTree = "<group>"; };
 		6B58F10E1C3D820E006149BA /* NewsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsTableViewCell.m; sourceTree = "<group>"; };
 		6B58F10F1C3D820E006149BA /* NewsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewsTableViewCell.xib; sourceTree = "<group>"; };
@@ -263,6 +314,12 @@
 		6BB403E51C19F18E00B5323E /* StundenplanController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StundenplanController.m; sourceTree = "<group>"; };
 		6BB403E71C19F45D00B5323E /* Stundenplan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stundenplan.h; sourceTree = "<group>"; };
 		6BB403E81C19F45D00B5323E /* Stundenplan.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stundenplan.m; sourceTree = "<group>"; };
+		6BBA2C941C83590900CDEDFE /* QuizAbfrageNavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuizAbfrageNavController.h; sourceTree = "<group>"; };
+		6BBA2C951C83590900CDEDFE /* QuizAbfrageNavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuizAbfrageNavController.m; sourceTree = "<group>"; };
+		6BBA2C971C83817C00CDEDFE /* QuizPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuizPageViewController.h; sourceTree = "<group>"; };
+		6BBA2C981C83817C00CDEDFE /* QuizPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuizPageViewController.m; sourceTree = "<group>"; };
+		6BBA2C9A1C8386A100CDEDFE /* QuizfrageAbfrageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuizfrageAbfrageViewController.h; sourceTree = "<group>"; };
+		6BBA2C9B1C8386A100CDEDFE /* QuizfrageAbfrageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuizfrageAbfrageViewController.m; sourceTree = "<group>"; };
 		6BBBC6B21C4E31B10029E7B0 /* KursDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KursDetailViewController.h; sourceTree = "<group>"; };
 		6BBBC6B31C4E31B10029E7B0 /* KursDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KursDetailViewController.m; sourceTree = "<group>"; };
 		6BBBC6B81C4FE2920029E7B0 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -301,6 +358,10 @@
 		6BE9FFC71C77B89A00C100CC /* EinstellungenTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EinstellungenTableViewController.h; sourceTree = "<group>"; };
 		6BE9FFC81C77B89A00C100CC /* EinstellungenTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EinstellungenTableViewController.m; sourceTree = "<group>"; };
 		6BE9FFCD1C77C69800C100CC /* Hausaufgabenheft 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Hausaufgabenheft 2.xcdatamodel"; sourceTree = "<group>"; };
+		6BEB5BDB1C87457400828744 /* QuizErgebnisViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuizErgebnisViewController.h; sourceTree = "<group>"; };
+		6BEB5BDC1C87457400828744 /* QuizErgebnisViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuizErgebnisViewController.m; sourceTree = "<group>"; };
+		6BEB5BDE1C8748C700828744 /* QuizErgebnisFrageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuizErgebnisFrageTableViewCell.h; sourceTree = "<group>"; };
+		6BEB5BDF1C8748C700828744 /* QuizErgebnisFrageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuizErgebnisFrageTableViewCell.m; sourceTree = "<group>"; };
 		6BF988C01C34368000DE1167 /* Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Logo.png; sourceTree = "<group>"; };
 		6BFD03CF1C5D15540088A68F /* PhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoViewController.h; sourceTree = "<group>"; };
 		6BFD03D01C5D15540088A68F /* PhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoViewController.m; sourceTree = "<group>"; };
@@ -337,6 +398,43 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6B03176B1C81EAEB0099BF93 /* Quiz */ = {
+			isa = PBXGroup;
+			children = (
+				6B03176F1C81EB0B0099BF93 /* user interface */,
+				6B0317731C81EF220099BF93 /* QuizController.h */,
+				6B0317741C81EF220099BF93 /* QuizController.m */,
+				6B5095BC1C834AEE00BADDC1 /* Quiz.h */,
+				6B5095BD1C834AEE00BADDC1 /* Quiz.m */,
+			);
+			name = Quiz;
+			sourceTree = "<group>";
+		};
+		6B03176F1C81EB0B0099BF93 /* user interface */ = {
+			isa = PBXGroup;
+			children = (
+				6B03176C1C81EB040099BF93 /* QuizOverviewViewController.h */,
+				6B03176D1C81EB040099BF93 /* QuizOverviewViewController.m */,
+				6B0317701C81ED110099BF93 /* DownloadQuizFragenViewController.h */,
+				6B0317711C81ED110099BF93 /* DownloadQuizFragenViewController.m */,
+				6B5095BF1C834B2400BADDC1 /* QuizKurseTableViewController.h */,
+				6B5095C01C834B2400BADDC1 /* QuizKurseTableViewController.m */,
+				6BBA2C941C83590900CDEDFE /* QuizAbfrageNavController.h */,
+				6BBA2C951C83590900CDEDFE /* QuizAbfrageNavController.m */,
+				6BBA2C971C83817C00CDEDFE /* QuizPageViewController.h */,
+				6BBA2C981C83817C00CDEDFE /* QuizPageViewController.m */,
+				6BBA2C9A1C8386A100CDEDFE /* QuizfrageAbfrageViewController.h */,
+				6BBA2C9B1C8386A100CDEDFE /* QuizfrageAbfrageViewController.m */,
+				6B2EAB221C84E15300B0ED05 /* AntwortButton.h */,
+				6B2EAB231C84E15300B0ED05 /* AntwortButton.m */,
+				6BEB5BDB1C87457400828744 /* QuizErgebnisViewController.h */,
+				6BEB5BDC1C87457400828744 /* QuizErgebnisViewController.m */,
+				6BEB5BDE1C8748C700828744 /* QuizErgebnisFrageTableViewCell.h */,
+				6BEB5BDF1C8748C700828744 /* QuizErgebnisFrageTableViewCell.m */,
+			);
+			name = "user interface";
+			sourceTree = "<group>";
+		};
 		6B06138E1BD96C7A00E7062B = {
 			isa = PBXGroup;
 			children = (
@@ -381,6 +479,7 @@
 				6BAE5D0D1C6927A80036FE04 /* Vertretungsplan */,
 				6BB403C81C16BB8E00B5323E /* Kursverwaltung */,
 				6BAE5CEC1C67ED710036FE04 /* Kalender */,
+				6B03176B1C81EAEB0099BF93 /* Quiz */,
 				6B7E58341BF53C5600F51E63 /* CoreData */,
 				6B2A2E531C30729C001ACA5B /* HelperClasses */,
 				6BF988BE1C34366600DE1167 /* Images */,
@@ -441,6 +540,8 @@
 				6B2A2E501C307294001ACA5B /* NSString+HTML.m */,
 				6B86CF661C70D9D800876D87 /* NSDate+AdvancedDate.h */,
 				6B86CF671C70D9D800876D87 /* NSDate+AdvancedDate.m */,
+				6B2EAB1B1C84B12300B0ED05 /* NSMutableArray+Shuffling.h */,
+				6B2EAB1C1C84B12300B0ED05 /* NSMutableArray+Shuffling.m */,
 			);
 			name = HelperClasses;
 			sourceTree = "<group>";
@@ -596,6 +697,18 @@
 				6BACB1B31C36CB87006BF81E /* MediaFile+CoreDataProperties.m */,
 				6BACB1B41C36CB87006BF81E /* MediaFile.h */,
 				6BACB1B51C36CB87006BF81E /* MediaFile.m */,
+				6B03177A1C8307C50099BF93 /* Antwort+CoreDataProperties.h */,
+				6B03177B1C8307C50099BF93 /* Antwort+CoreDataProperties.m */,
+				6B03177C1C8307C50099BF93 /* Antwort.h */,
+				6B03177D1C8307C50099BF93 /* Antwort.m */,
+				6B03177E1C8307C50099BF93 /* Frage+CoreDataProperties.h */,
+				6B03177F1C8307C50099BF93 /* Frage+CoreDataProperties.m */,
+				6B0317801C8307C50099BF93 /* Frage.h */,
+				6B0317811C8307C50099BF93 /* Frage.m */,
+				6B0317821C8307C50099BF93 /* Themenbereich+CoreDataProperties.h */,
+				6B0317831C8307C50099BF93 /* Themenbereich+CoreDataProperties.m */,
+				6B0317841C8307C50099BF93 /* Themenbereich.h */,
+				6B0317851C8307C50099BF93 /* Themenbereich.m */,
 			);
 			name = CoreData;
 			sourceTree = "<group>";
@@ -821,9 +934,11 @@
 		6BF988BE1C34366600DE1167 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				6B1F6E0E1C86284C007A5ADF /* Quiz-cancel-button.png */,
 				6B2233571C6BDC3E00D26032 /* IMG_6363.JPG */,
 				6B2233551C6BD06A00D26032 /* Tafel.JPG */,
 				6B86CF4E1C6FA9BF00876D87 /* nur-Tafel.JPG */,
+				6B1F6E101C862CB9007A5ADF /* Quiz-Unterstrich-Tafel-Styl.png */,
 				6BF988BF1C34367300DE1167 /* Logos */,
 			);
 			name = Images;
@@ -959,7 +1074,9 @@
 				6BF988C11C34368000DE1167 /* Logo.png in Resources */,
 				6B86CF5A1C6FC4BC00876D87 /* StundeTableViewCell.xib in Resources */,
 				6B6AC60F1C340AE9002D2216 /* KursTableViewCell.xib in Resources */,
+				6B1F6E111C862CB9007A5ADF /* Quiz-Unterstrich-Tafel-Styl.png in Resources */,
 				6B86CF4F1C6FA9BF00876D87 /* nur-Tafel.JPG in Resources */,
+				6B1F6E0F1C86284C007A5ADF /* Quiz-cancel-button.png in Resources */,
 				6BACB1A51C348505006BF81E /* AufgabeTableViewCell.xib in Resources */,
 				6B2233561C6BD06A00D26032 /* Tafel.JPG in Resources */,
 				6B0613AD1BD96C7A00E7062B /* LaunchScreen.storyboard in Resources */,
@@ -994,6 +1111,7 @@
 			files = (
 				6BDFD0D51C0CE14300F4E333 /* User+CoreDataProperties.m in Sources */,
 				6B94C6321C32E51C00F513EF /* UebersichtViewController.m in Sources */,
+				6B0317881C8307C50099BF93 /* Frage+CoreDataProperties.m in Sources */,
 				6BA07B6B1BDD7D5C00C34B8A /* LoginViewController.m in Sources */,
 				6B94C62A1C31FA1800F513EF /* StundenplanTableViewCell.m in Sources */,
 				6BDFD0C81C0CE0B400F4E333 /* Klausur+CoreDataProperties.m in Sources */,
@@ -1005,11 +1123,15 @@
 				6BDFD0CC1C0CE0B400F4E333 /* Klausuraufsicht+CoreDataProperties.m in Sources */,
 				6BDFD0CF1C0CE0B400F4E333 /* Termin+CoreDataProperties.m in Sources */,
 				6B0613D61BD96ED800E7062B /* IntroViewController.m in Sources */,
+				6BEB5BDD1C87457400828744 /* QuizErgebnisViewController.m in Sources */,
 				6B2A2E511C307294001ACA5B /* GTMNSString+HTML.m in Sources */,
 				6B6AC6071C33FD4F002D2216 /* AufgabenOverviewViewController.m in Sources */,
 				6B3F826C1C3D856D00728D7C /* WebNewsViewController.m in Sources */,
 				6B94C62E1C32CADB00F513EF /* StundenplanWochentag.m in Sources */,
+				6B2EAB1D1C84B12300B0ED05 /* NSMutableArray+Shuffling.m in Sources */,
+				6BBA2C961C83590900CDEDFE /* QuizAbfrageNavController.m in Sources */,
 				6B06139F1BD96C7A00E7062B /* AppDelegate.m in Sources */,
+				6B03178A1C8307C50099BF93 /* Themenbereich+CoreDataProperties.m in Sources */,
 				6BB403C11C16237B00B5323E /* ServerRequestController.m in Sources */,
 				6B3F826F1C3D9B1100728D7C /* News.m in Sources */,
 				6B23E26D1C10DBDB00E501E7 /* Hausaufgabenheft.xcdatamodeld in Sources */,
@@ -1017,6 +1139,7 @@
 				6BB403CB1C16BBA300B5323E /* KurseController.m in Sources */,
 				6B6AC60E1C340AE9002D2216 /* KursTableViewCell.m in Sources */,
 				6BAE5D081C67EFCC0036FE04 /* CalendarViewController.m in Sources */,
+				6BBA2C991C83817C00CDEDFE /* QuizPageViewController.m in Sources */,
 				6B5DE92F1BFD15EC0032CFBE /* Kurs.m in Sources */,
 				6BAE5D271C6A37F50036FE04 /* Vertretung.m in Sources */,
 				6B86CF521C6FBE4400876D87 /* Newscenter.m in Sources */,
@@ -1031,30 +1154,39 @@
 				6BDFD0CA1C0CE0B400F4E333 /* Lehrer+CoreDataProperties.m in Sources */,
 				6B2A2E481C302270001ACA5B /* WebsiteTag+CoreDataProperties.m in Sources */,
 				6BDFD0CE1C0CE0B400F4E333 /* Schulstunde+CoreDataProperties.m in Sources */,
+				6B0317871C8307C50099BF93 /* Antwort.m in Sources */,
 				6BAE5D261C6A37F50036FE04 /* Vertretung+CoreDataProperties.m in Sources */,
 				6B2A2E281C2EAE06001ACA5B /* Fach.m in Sources */,
+				6B0317891C8307C50099BF93 /* Frage.m in Sources */,
+				6B5095C11C834B2400BADDC1 /* QuizKurseTableViewController.m in Sources */,
 				6B6AC6131C341CED002D2216 /* KonfigurierteKurseWaehlenViewController.m in Sources */,
 				6BBBC6BF1C4FF7220029E7B0 /* AufgabenFilterPrefViewController.m in Sources */,
 				6BDFD0D61C0CE14300F4E333 /* User.m in Sources */,
 				6B86CF5E1C6FD0D600876D87 /* NewscenterTableViewCell.m in Sources */,
+				6BEB5BE01C8748C700828744 /* QuizErgebnisFrageTableViewCell.m in Sources */,
 				6BACB1B81C36CB87006BF81E /* MediaFile+CoreDataProperties.m in Sources */,
 				6B58F1101C3D820E006149BA /* NewsTableViewCell.m in Sources */,
 				6B2A2E491C302270001ACA5B /* WebsiteTag.m in Sources */,
 				6BAE5D101C6927CF0036FE04 /* Vertretungsplan.m in Sources */,
+				6B03178B1C8307C50099BF93 /* Themenbereich.m in Sources */,
 				6BDFD0CB1C0CE0B400F4E333 /* Aufgabe+CoreDataProperties.m in Sources */,
 				6B58F1141C3D8319006149BA /* NewsController.m in Sources */,
 				6BBBC6BC1C4FE2AD0029E7B0 /* TeacherEmailController.m in Sources */,
 				6B06139C1BD96C7A00E7062B /* main.m in Sources */,
 				6BDFD0AC1C0B984F00F4E333 /* KurseWaehlenViewController.m in Sources */,
+				6B0317721C81ED110099BF93 /* DownloadQuizFragenViewController.m in Sources */,
 				6B2A2E521C307294001ACA5B /* NSString+HTML.m in Sources */,
 				6BE9FFC91C77B89A00C100CC /* EinstellungenTableViewController.m in Sources */,
 				6B0613D91BD9850800E7062B /* WelcomeViewController.m in Sources */,
 				6B5DE9331BFD15EC0032CFBE /* Termin.m in Sources */,
 				6BFD03D41C5D15AF0088A68F /* MediaFilesDetailViewController.m in Sources */,
+				6B0317861C8307C50099BF93 /* Antwort+CoreDataProperties.m in Sources */,
 				6B3F82721C3EF17600728D7C /* WebNewsDetailViewController.m in Sources */,
+				6B2EAB241C84E15300B0ED05 /* AntwortButton.m in Sources */,
 				6B5DE9351BFD15EC0032CFBE /* Note.m in Sources */,
 				6B0613D31BD96EB800E7062B /* IntroPageViewController.m in Sources */,
 				6BB403E91C19F45D00B5323E /* Stundenplan.m in Sources */,
+				6B5095BE1C834AEE00BADDC1 /* Quiz.m in Sources */,
 				6B86CF681C70D9D800876D87 /* NSDate+AdvancedDate.m in Sources */,
 				6BDFD0D01C0CE0B400F4E333 /* Note+CoreDataProperties.m in Sources */,
 				6BACB1A41C348505006BF81E /* AufgabeTableViewCell.m in Sources */,
@@ -1062,6 +1194,7 @@
 				6BAE5D1A1C6934CE0036FE04 /* Stunde.m in Sources */,
 				6BB403BE1C15EF8700B5323E /* KursWaehlenTableViewCell.m in Sources */,
 				6B5DE92B1BFD15EC0032CFBE /* Aufgabe.m in Sources */,
+				6B03176E1C81EB040099BF93 /* QuizOverviewViewController.m in Sources */,
 				6B0054901C3176FB00BE862D /* FinishedSetupViewController.m in Sources */,
 				6B5DE9391BFD15EC0032CFBE /* Lehrer.m in Sources */,
 				6BDFD0E81C0CEF4A00F4E333 /* ServerUserDataController.m in Sources */,
@@ -1070,7 +1203,9 @@
 				6B7E57F11BF3B92B00F51E63 /* KeychainItemWrapper.m in Sources */,
 				6BFD03D71C5D1A030088A68F /* PhotosPageViewController.m in Sources */,
 				6BFD03D11C5D15540088A68F /* PhotoViewController.m in Sources */,
+				6B0317751C81EF220099BF93 /* QuizController.m in Sources */,
 				6B86CF551C6FBF3100876D87 /* NewscenterObject.m in Sources */,
+				6BBA2C9C1C8386A100CDEDFE /* QuizfrageAbfrageViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1322,11 +1457,14 @@
 		6B23E26B1C10DBDB00E501E7 /* Hausaufgabenheft.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				6B2EAB1E1C84B76300B0ED05 /* Hausaufgabenheft 6.xcdatamodel */,
+				6B03178C1C830E460099BF93 /* Hausaufgabenheft 5.xcdatamodel */,
+				6B0317761C8207800099BF93 /* Hausaufgabenheft 4.xcdatamodel */,
 				6B2C3A3A1C7921F700E55AF3 /* Hausaufgabenheft 3.xcdatamodel */,
 				6BE9FFCD1C77C69800C100CC /* Hausaufgabenheft 2.xcdatamodel */,
 				6B23E26C1C10DBDB00E501E7 /* Hausaufgabenheft.xcdatamodel */,
 			);
-			currentVersion = 6B2C3A3A1C7921F700E55AF3 /* Hausaufgabenheft 3.xcdatamodel */;
+			currentVersion = 6B2EAB1E1C84B76300B0ED05 /* Hausaufgabenheft 6.xcdatamodel */;
 			path = Hausaufgabenheft.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

@@ -2,7 +2,7 @@
 //  User+CoreDataProperties.h
 //  Hausaufgabenheft
 //
-//  Created by Gero Embser on 26.02.16.
+//  Created by Gero Embser on 27.02.16.
 //  Copyright © 2016 Bischöfliche Marienschule Mönchengladbach. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -11,7 +11,8 @@
 
 #import "User.h"
 
-@class Aufgabe, Kurs, WebsiteTag;
+
+@class Aufgabe, WebsiteTag;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -32,6 +33,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSString *stufe;
 @property (nullable, nonatomic, retain) NSNumber *validData;
 @property (nullable, nonatomic, retain) NSString *vorname;
+@property (nullable, nonatomic, retain) NSNumber *quizPunkte;
+@property (nullable, nonatomic, retain) NSDate *quizLastUpdate;
 @property (nullable, nonatomic, retain) NSSet<Aufgabe *> *aufgaben;
 @property (nullable, nonatomic, retain) NSSet<Kurs *> *kurse;
 @property (nullable, nonatomic, retain) NSSet<WebsiteTag *> *tags;

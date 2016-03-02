@@ -56,6 +56,9 @@ NS_ASSUME_NONNULL_BEGIN
 ///gibt die Anzahl der ausstehenden Aufgaben zurück
 - (NSUInteger)anzahlAusstehendeAufgaben;
 
+///gibt den kompletten Namen des Users zurück - Format: "Vorname Nachname"
+- (NSString *)fullName;
+
 #pragma mark - Properties
 ///hält den Stundenplan für den Benutzer
 @property (nonatomic) Stundenplan *stundenplan;
