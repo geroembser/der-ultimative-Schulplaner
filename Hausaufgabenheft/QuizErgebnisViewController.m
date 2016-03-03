@@ -78,7 +78,13 @@
     
     
     //in der TableViewCell die jeweilige Frage anzeigen
-    cell.dargestellteFrage = [self.displayedQuiz frageAtIndex:indexPath.row];
+    Frage *frageForTableViewCell = [self.displayedQuiz frageAtIndex:indexPath.row];
+    cell.dargestellteFrage = frageForTableViewCell;
+    
+    //überprüfen, ob die Frage richtig oder falsch beantwortet wurde
+    BOOL richtig = [self.displayedQuiz frageRichtigBeantwortet:frageForTableViewCell];
+    
+    [cell zeigeAnAlsRichtig:richtig];
     
     
     return cell;
@@ -86,6 +92,9 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    //deselect the table view cell
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
     //die entsprechende Delegate-Methode aufrufen, die das Ergebnis der jeweiligen Frage erneut anzeigen lassen soll
     if (self.delegate && [self.delegate respondsToSelector:@selector(shouldShowErgebnisVonFrage:inQuiz:)]) {
         [self.delegate shouldShowErgebnisVonFrage:[self.displayedQuiz frageAtIndex:indexPath.row] inQuiz:self.displayedQuiz];

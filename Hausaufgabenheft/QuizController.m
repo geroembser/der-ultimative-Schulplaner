@@ -97,7 +97,7 @@
                 NSInteger themaID = [[einThema objectForKey:@"id"]integerValue];
                 NSString *themaTitel = [einThema objectForKey:@"title"];
                 NSString *beschreibung = [einThema objectForKey:@"wInfos"];
-                NSString *datumString = [einThema objectForKey:@"dat"];
+                NSString *datumString = [einThema objectForKey:@"change"];
                 
                 //Datum formatieren
                 NSDateFormatter *df = [[NSDateFormatter alloc]init];
@@ -139,45 +139,45 @@
                 neueFrage.imageURL = bildURLString;
                 neueFrage.kurs = [Kurs kursFuerID:kursID inManagedObjectContext:self.user.managedObjectContext];                 //Frage einem Kurs zuordnen...
                 
-            }
-            
-            
-            //Antworten auslesen und einer Frage zuordnen, danach importieren
-            NSArray *antworten = [jsonDict objectForKey:@"antworten"];
-            
-            for (NSDictionary *eineAntwort in antworten) {
-                //Daten aus Dictionary lesen
-//                NSInteger antwortID = [[eineAntwort objectForKey:@"id"]integerValue]; //derzeit nicht benötigt...
-                NSInteger frageID = [[eineAntwort objectForKey:@"fragid"]integerValue]; //die ID der Frage, für die diese Antwort ist
-                NSInteger richtigeAntwort = [[eineAntwort objectForKey:@"truth"]integerValue]-1; //die Nummer der Antwort, die richtig ist, (minus 1, weil Florian auf dem Server nicht anfängt, bei 0 zu zählen - zum jetzigen Zeitpunkt zumindest)
-                NSString *loesungString = [eineAntwort objectForKey:@"description"]; //die Beschreibung der Lösung für die Frage, die auf Wunsch des Users angezeigt werden kann (Lange Antwort)
-                NSArray *antwortMoeglichkeiten = [eineAntwort objectForKey:@"antworten"]; //die verschiedenen Antwortmöglichkeiten für diese eine Frage (kurze Antworten)
                 
-                //die Frage aus der Datenbank bekommen, die dieser Antwort zugeordnet ist (wirklich nur die vorhandene Frage --> Sinn: siehe nächste if-Abfrage)
-                Frage *associatedFrage = [Frage vorhandeneFrageMitID:frageID inManagedObjectContext:self.user.managedObjectContext];
+                //Antworten für diese Frage auslesen und einer Frage zuordnen, danach importieren
+                NSArray *antworten = [jsonDict objectForKey:@"antworten"];
                 
-                //nur wenn eine Frage mit der ID in der Datenbank besteht, speichere auch die Antworten, ansonsten hat das keinen Sinn und auf dem Server ist wahrscheinlich irgendein Fehler passiert
-                if (associatedFrage) {
+                for (NSDictionary *eineAntwort in antworten) {
+                    //Daten aus Dictionary lesen
+                    //                NSInteger antwortID = [[eineAntwort objectForKey:@"id"]integerValue]; //derzeit nicht benötigt...
+                    NSInteger frageID = [[eineAntwort objectForKey:@"fragid"]integerValue]; //die ID der Frage, für die diese Antwort ist
+                    NSInteger richtigeAntwort = [[eineAntwort objectForKey:@"truth"]integerValue]-1; //die Nummer der Antwort, die richtig ist, (minus 1, weil Florian auf dem Server nicht anfängt, bei 0 zu zählen - zum jetzigen Zeitpunkt zumindest)
+                    NSString *loesungString = [eineAntwort objectForKey:@"description"]; //die Beschreibung der Lösung für die Frage, die auf Wunsch des Users angezeigt werden kann (Lange Antwort)
+                    NSArray *antwortMoeglichkeiten = [eineAntwort objectForKey:@"antworten"]; //die verschiedenen Antwortmöglichkeiten für diese eine Frage (kurze Antworten)
                     
-                    //temporär erstmal, bis Florian das Skript überarbeitet hat, eine Antwort für jede Antwortmöglichkeit erstellen, um bei den Antworten später irgendwann einmal differenzierte Möglichkeiten der Erklärung zu bieten
-                    for (int i = 0; i < antwortMoeglichkeiten.count; i++) {
-                        //die jeweilige Antwortmöglichkeit für den Schleifendurchlauf
-                        NSString *antwortMoeglichkeit = [antwortMoeglichkeiten objectAtIndex:i];
+                    //die Frage aus der Datenbank bekommen, die dieser Antwort zugeordnet ist (wirklich nur die vorhandene Frage --> Sinn: siehe nächste if-Abfrage)
+                    Frage *associatedFrage = [Frage vorhandeneFrageMitID:frageID inManagedObjectContext:self.user.managedObjectContext];
+                    
+                    //nur wenn eine Frage mit der ID in der Datenbank besteht, speichere auch die Antworten, ansonsten hat das keinen Sinn und auf dem Server ist wahrscheinlich irgendein Fehler passiert
+                    if (associatedFrage) {
                         
-                        //eine neue Antwort erstellen --> diese Antwort der Frage zuweisen
-                        Antwort *neueAntwort = [Antwort neueAntwortFuerFrage:associatedFrage inManagedObjectContext:associatedFrage.managedObjectContext];
-                        neueAntwort.antwortKurz = antwortMoeglichkeit;
-                        neueAntwort.antwortLangfassung = loesungString; //die Langfassung der Antwort
-                        
-                        //überprüfen, ob die Antwortmöglichkeit die richtige Antwortmöglichkeit ist
-                        BOOL isRichtigeAntwort = NO;
-                        if (i == richtigeAntwort) {
-                            isRichtigeAntwort = YES;
+                        //temporär erstmal, bis Florian das Skript überarbeitet hat, eine Antwort für jede Antwortmöglichkeit erstellen, um bei den Antworten später irgendwann einmal differenzierte Möglichkeiten der Erklärung zu bieten
+                        for (int i = 0; i < antwortMoeglichkeiten.count; i++) {
+                            //die jeweilige Antwortmöglichkeit für den Schleifendurchlauf
+                            NSString *antwortMoeglichkeit = [antwortMoeglichkeiten objectAtIndex:i];
+                            
+                            //eine neue Antwort erstellen --> diese Antwort der Frage zuweisen
+                            Antwort *neueAntwort = [Antwort neueAntwortFuerFrage:associatedFrage inManagedObjectContext:associatedFrage.managedObjectContext];
+                            neueAntwort.antwortKurz = antwortMoeglichkeit;
+                            neueAntwort.antwortLangfassung = loesungString; //die Langfassung der Antwort
+                            
+                            //überprüfen, ob die Antwortmöglichkeit die richtige Antwortmöglichkeit ist
+                            BOOL isRichtigeAntwort = NO;
+                            if (i == richtigeAntwort) {
+                                isRichtigeAntwort = YES;
+                            }
+                            
+                            neueAntwort.richtig = [NSNumber numberWithBool:isRichtigeAntwort];
                         }
-                        
-                        neueAntwort.richtig = [NSNumber numberWithBool:isRichtigeAntwort];
                     }
                 }
+                
             }
             
             
@@ -262,6 +262,24 @@
 
 - (NSUInteger)numberOfAvailableQuestions {
     return 0;
+}
+
+- (NSFetchRequest *)alleKurseMitFragenFetchedRequest {
+
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Kurs" inManagedObjectContext:self.user.managedObjectContext];
+    [fetchRequest setEntity:entity];
+
+    // Specify criteria for filtering which objects to fetch
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"user == %@ AND aktiv == YES AND ANY fragen.id >= 0", self.user]; //letzter Teil des Predicates sorgt dafür, dass nur die Kurse angezeigt werden, für die auch Fragen verfügbar sind
+    [fetchRequest setPredicate:predicate];
+    
+    // Specify how the fetched objects should be sorted
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"id"
+                                                                   ascending:YES];
+    [fetchRequest setSortDescriptors:[NSArray arrayWithObjects:sortDescriptor, nil]];
+    
+    return fetchRequest;
 }
 
 @end

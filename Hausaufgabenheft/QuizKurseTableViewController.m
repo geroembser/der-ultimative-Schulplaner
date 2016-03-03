@@ -10,8 +10,13 @@
 #import "Quiz.h"
 #import "QuizController.h"
 #import "QuizAbfrageNavController.h"
+#import "FragenOverviewKursTableViewCell.h"
+#import "KurseController.h"
 
 @interface QuizKurseTableViewController ()
+
+///der Fetched Results Controller, der die Kurse aus der Datenbank nimmt
+@property NSFetchedResultsController *fetchedResultsController;
 
 @end
 
@@ -20,11 +25,20 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+    //ausgewählte Zellen des TableViews beim Erscheinen des Views abwählen
+     self.clearsSelectionOnViewWillAppear = YES;
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    //den FetchedResultsController konfigurieren
+    QuizController *quizController = [QuizController defaultQuizController];
+    
+    self.fetchedResultsController = [[NSFetchedResultsController alloc]initWithFetchRequest:quizController.alleKurseMitFragenFetchedRequest managedObjectContext:quizController.user.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
+    
+    NSError *fetchingError;
+    [self.fetchedResultsController performFetch:&fetchingError];
+    
+    if (fetchingError) {
+        NSLog(@"Fehler beim Suchen aller Kurse für den User, die Fragen beinhalten");
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -35,22 +49,32 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 0;
+    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
+    
+    return [sectionInfo numberOfObjects];
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    FragenOverviewKursTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"quizErgebnisFrageTableViewCell" forIndexPath:indexPath];
     
     // Configure the cell...
+    Kurs *kursForCell = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    cell.kurs = kursForCell;
+    
     
     return cell;
 }
-*/
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    //deselect the row
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
 
 /*
 // Override to support conditional editing of the table view.
@@ -95,6 +119,70 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+
+#pragma mark - FRC Delegate
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
+    [self.tableView beginUpdates];
+}
+
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
+           atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
+    
+    UITableView *tableView = self.tableView;
+    
+    switch(type) {
+        case NSFetchedResultsChangeInsert:
+            [tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex]
+                     withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex]
+                     withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        default: return;
+    }
+}
+
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
+       atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
+      newIndexPath:(NSIndexPath *)newIndexPath {
+    
+    UITableView *tableView = self.tableView;
+    
+    switch(type) {
+            
+        case NSFetchedResultsChangeInsert:
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
+                             withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+                             withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeUpdate:
+            [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            break;
+            
+        case NSFetchedResultsChangeMove:
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+                             withRowAnimation:UITableViewRowAnimationFade];
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
+                             withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+    [self.tableView endUpdates];
+}
 
 #pragma mark - Actions
 ///startet das Quiz von allen Fragen zufällig

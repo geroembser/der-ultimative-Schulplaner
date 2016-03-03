@@ -11,6 +11,16 @@
 @implementation QuizErgebnisFrageTableViewCell
 
 
+#pragma mark - Methoden
+- (void)zeigeAnAlsRichtig:(BOOL)richtig {
+    if (richtig) {
+        self.contentView.backgroundColor = [UIColor colorWithRed:0.71 green:0.81 blue:0.40 alpha:1.0];
+    }
+    else {
+        self.contentView.backgroundColor = [UIColor colorWithRed:0.89 green:0.02 blue:0.07 alpha:1.0];
+    }
+}
+
 
 #pragma mark - Setter überschreiben
 

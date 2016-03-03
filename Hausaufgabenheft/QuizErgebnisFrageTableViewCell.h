@@ -21,4 +21,8 @@
 ///die Frage, die in der TableViewCell dargestellt werden soll
 @property (nonatomic) Frage *dargestellteFrage;
 
+#pragma mark - Methoden
+///zeigt die TableViewCell so an, dass deutlich wird, dass die Frage richtig oder falsch beantwortet wurde (je nach übergebenen Parameter)
+- (void)zeigeAnAlsRichtig:(BOOL)richtig;
+
 @end

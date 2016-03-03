@@ -95,7 +95,7 @@
 - (void)quizfrageAbfrageViewController:(QuizfrageAbfrageViewController *)quizfrageAbfrageViewController frageBeantwortet:(Frage *)beantworteteFrage {
     //nächste Frage beim Quiz abfragen
     Frage *naechsteFrage = [self.quiz naechsteFrage];
-    NSLog(@"naechste Frage: %@", naechsteFrage);
+
     if (naechsteFrage) {
         
         //wenn die nächste Frage auch schon beantwortet wurde, dann erlaube die Beantwortung nicht --> so kann auch durch die bereits beantworteten Fragen "gezappt" werden

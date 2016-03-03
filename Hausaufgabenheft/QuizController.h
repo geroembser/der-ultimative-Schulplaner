@@ -58,6 +58,9 @@ static NSString* const QuizControllerUpdateFailed = @"QuizControllerUpdateFailed
 ///sollte einen Array von den dreißig neusten für den User verfügbaren Fragen zurückgeben
 - (NSArray <Frage *> *)alleDreißigNeustenFragen;
 
+///gibt eine Fetched Request zurück, mit allen aktiven Kursen des Users des QuizControllers, für die Fragen verfügbar sind
+- (NSFetchRequest *)alleKurseMitFragenFetchedRequest;
+
 #pragma mark - Attribute
 ///der User, für den der QuizController die Quiz-Fragen etc. verwaltet
 @property User *user;
