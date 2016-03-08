@@ -13,6 +13,7 @@
 #import "Lehrer.h"
 #import "Newscenter.h"
 #import "NewscenterTableViewCell.h"
+#import "NSDate+AdvancedDate.h"
 
 @interface UebersichtViewController () <NewscenterDelegate>
 ///das Newscenter, dass  in der Übersicht dargestellt wird
@@ -30,6 +31,9 @@
     
     //das Delegate vom Newscenter setzen
     self.newscenter.delegate = self;
+    
+    //beim Start die allgemeinen Informationen über das Newscenter aktualisieren
+    [self refreshGeneralNewscenterInfo];
     
     
     //Newscenter-TableView
@@ -122,6 +126,18 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
+#pragma mark erweiterte Newscenter-Methoden, für einfachere Programmierung
+///der Aufruf dieser Methode soll die generellen Informationen und Details zum Newscenter ausgeben
+- (void)refreshGeneralNewscenterInfo {
+    ///das Datum der letzten Aktualisierung darstellen
+    NSString *lastUpdateString = [[self.newscenter.mitteilungenController.user lastMitteilungenUpdate]datumUndUhrzeitString];
+   
+    //wenn das Datum gültig ist...
+    if (lastUpdateString && lastUpdateString.length > 0) {
+        self.newscenterStatusLabel.text = [NSString stringWithFormat:@"letztes Update: %@", lastUpdateString];
+    }
+}
+
 #pragma mark - Newscenter-Delegate
 - (void)newscenterDidBeginReloading:(Newscenter *)newscenter {
     [self.newscenterTableView beginUpdates];
@@ -135,5 +151,16 @@
 - (void)newscenter:(Newscenter *)newscenter didRemoveNewsObject:(NewscenterObject *)newsObj atIndex:(NSUInteger)index {
     [self.newscenterTableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
+- (void)newscenterShouldStartReload:(Newscenter *)newscenter {
+    //den Table-View refreshen (aber auf dem main-thread)
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.newscenterTableView reloadData];
+        
+        //die generellen Infos über das Newscenter (damit ist hauptsächlich das Datum der letzten Aktualisierung gemeint) aktualisieren
+        [self refreshGeneralNewscenterInfo];
+    });
+}
+
+
 
 @end

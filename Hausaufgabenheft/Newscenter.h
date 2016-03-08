@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "NewscenterObject.h"
+#import "MitteilungenController.h"
 
 
 ///Das Newscenter-Protokoll, mit dem das Delegate eines Newscenter Objekts über Änderungen im Newscenter informiert werden kann
@@ -23,7 +24,10 @@
 - (void)newscenterDidBeginReloading:(Newscenter *)newscenter;
 ///gibt an, dass die Aktualisierung des Newscenters abgeschlossen wurde
 - (void)newscenterDidEndReloading:(Newscenter *)newscenter;
-
+///gibt an, dass ein Newscenter-Objekt am gegebenen IndexPath aktualisiert wurde
+- (void)newscenter:(Newscenter *)newscenter didReloadNewsObject:(NewscenterObject *)newsObj atIndex:(NSUInteger)index;
+///gibt an, dass das Newscenter neugeladen werden soll
+- (void)newscenterShouldStartReload:(Newscenter *)newscenter;
 @end
 
 ///Die Newscenter-Klasse, die ein Newscenter bietet und gleichzeitig Methoden und Eigenschaften für seine Verwaltung implementiert.
@@ -54,6 +58,11 @@
 
 ///das Delegate von diesem Newscenter
 @property id <NewscenterDelegate> delegate;
+
+#pragma mark - andere Attribute des Newscenter-Objekts
+
+///der MitteilungenController, von denen dieses Newscenter seine Mitteilungen bezieht
+@property MitteilungenController *mitteilungenController;
 
 
 

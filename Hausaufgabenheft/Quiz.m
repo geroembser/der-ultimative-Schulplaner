@@ -7,6 +7,7 @@
 //
 
 #import "Quiz.h"
+#import "NSMutableArray+Shuffling.h"
 
 @implementation Quiz
 
@@ -39,6 +40,15 @@
 }
 
 + (Quiz *)quizZusammenstellenMitArrayVonFragen:(NSArray<Frage *> *)fragen randomly:(BOOL)randomly fuerUser:(User *)user{
+    //wenn randomly gewählt wurde, dann mische den Array mit den Fragen vorher einmal durch
+    if (randomly) {
+        NSMutableArray *fragenMutable = [NSMutableArray arrayWithArray:fragen];
+        [fragenMutable shuffle];
+        
+        fragen = fragenMutable;
+    }
+    
+    //dann erstelle das Quiz
     Quiz *neuesQuiz = [[Quiz alloc]initWithArrayVonFragen:fragen andUser:user];
     
     if (neuesQuiz) {
@@ -69,24 +79,13 @@
 }
 
 - (Frage *)naechsteFrage {
-    ///gibt die jeweils erste Frage des unbeantworteteFragen-arrays zurück, wenn nicht zufällig beim Quiz gewählt wurde
-    Frage *frageToReturn;
-    if (self.randomly && self.unbeantworteteFragen.count > 0) { //eine unbeantwortete Frage muss mindestens vorhanden sein
-        frageToReturn = [self.unbeantworteteFragen objectAtIndex:arc4random()%self.unbeantworteteFragen.count];
-    }
-    else frageToReturn = self.unbeantworteteFragen.firstObject;
-    
-    return frageToReturn;
+    ///gibt die jeweils erste Frage des unbeantworteteFragen-arrays zurück (auch wenn zufällig beim Quiz gewählt wurde, weil der Array dann vorher durchgemischt wurde, damit der Zugriff mit Indizes etc. später funktioniert und man beispielsweise weiß, die wie vielte Frage abgefragt wird
+    return self.unbeantworteteFragen.firstObject;
 }
 
 - (void)frage:(Frage *)frage richtigBeantwortet:(BOOL)richtig {
     if (frage) {
-        //zähle die Anzahl bei der Frage hoch, wie oft diese schon richtig/falsch beantwortet wurde
-        frage.anzahlRichtigBeantwortet = @(frage.anzahlRichtigBeantwortet.integerValue+(int)richtig); //kleiner Trick... 😉
-        
-        frage.anzahlFalschBeantwortet = @(frage.anzahlFalschBeantwortet.integerValue+(int)!richtig);
-        
-        //mache das gleiche bei der Einstellung, wie viele Fragen während des gesamten Quizzes schon richtig beantwortet wurden
+        //kleiner Trick... 😉: bei der Einstellung, wie viele Fragen während des gesamten Quizzes schon richtig beantwortet wurden
         self.anzahlRichtigBeantworteterFragen+=richtig;
         
         //die Frage aus dem unbeantworteteFragen-array entfernen und dem bearbeitete Fragen-Array hinzufügen
@@ -100,6 +99,11 @@
         else {
             [self.falschBeantowrteteFragen addObject:frage];
         }
+        
+        
+        //die Frage in der Datenbank markieren und hochzählen, wie oft die Frage schon beantwortet wurde
+        [frage frageBeantwortet:richtig];
+        
     }
 }
 

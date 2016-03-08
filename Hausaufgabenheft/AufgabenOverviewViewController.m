@@ -169,7 +169,7 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     //erste Aufgabe der Section bekommen
     Aufgabe *ersteAufgabeAusSection = [self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:section]];
-    
+
     //... und anhand dessen "erledigt"-Property entscheiden, ob die Aufgaben erledigt wurden
     BOOL erledigt = ersteAufgabeAusSection.erledigt.boolValue;
     

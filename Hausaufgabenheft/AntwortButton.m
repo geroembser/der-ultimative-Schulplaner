@@ -20,6 +20,10 @@
 - (void)willMoveToSuperview:(UIView *)newSuperview {
     //runde Ecken machen
     self.layer.cornerRadius = 10;
+    
+    //Text im Label zentrieren und den Line-Break-Mode setzen, damit auch längere Antworten halbwegs akzeptabel angezeigt werden
+    self.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    self.titleLabel.textAlignment = NSTextAlignmentCenter;
 }
 
 #pragma mark - Methoden zur Konfiguration der Buttons

@@ -15,6 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Themenbereich : NSManagedObject
 
+
+#pragma mark - Themenbereich-Instanzen zurückgeben
 ///gibt einen vorhandenen Themenbereich im gegebenen ManagedObjectContext zurück, der die gegebenen ID hat --> ansonsten nil
 + (Themenbereich *)vorhandenerThemenbereichMitID:(NSInteger)themenID inManagedObjectContext:(NSManagedObjectContext *)context;
 
@@ -23,6 +25,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 ///erstellt einen neuen Themenbereich im gegebenen ManagedObjectContext mit der gegebenen ID für den neuen Themenbereich
 + (Themenbereich *)neuerThemenbereichMitID:(NSInteger)themenID inManagedObjectContext:(NSManagedObjectContext *)context;
+
+
+#pragma mark - Attribute bzw. Infos über den Kurs zurückgeben
+///gibt die Anzahl aller Fragen in diesem Themenbereich an
+- (NSUInteger)anzahlFragen;
+
+///gibt die Anzahl der richtigen Fragen in diesem Themenbereich zurück
+- (NSUInteger)anzahlRichtigerFragen;
 
 @end
 

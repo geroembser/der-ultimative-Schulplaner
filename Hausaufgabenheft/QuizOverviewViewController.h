@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *punkteLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *userImageImageView;
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
+@property (weak, nonatomic) IBOutlet UIView *punkteContainerView;
 
 
 #pragma mark - Actions

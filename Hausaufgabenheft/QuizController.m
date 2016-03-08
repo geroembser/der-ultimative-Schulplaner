@@ -95,13 +95,14 @@
             for (NSDictionary *einThema in themen) {
                 //Daten aus Dictionary lesen und importieren
                 NSInteger themaID = [[einThema objectForKey:@"id"]integerValue];
-                NSString *themaTitel = [einThema objectForKey:@"title"];
+                NSString *themaTitel = [einThema objectForKey:@"titel"];
                 NSString *beschreibung = [einThema objectForKey:@"wInfos"];
                 NSString *datumString = [einThema objectForKey:@"change"];
                 
                 //Datum formatieren
                 NSDateFormatter *df = [[NSDateFormatter alloc]init];
-                [df setDateFormat:@"dd.MM.YYYY HH:mm"];
+                [df setDateFormat:@"dd.MM.yyyy HH:mm"];
+                [df setTimeZone:[NSTimeZone defaultTimeZone]];
                 NSDate *themaLetzteAktualisierung = [df dateFromString:datumString];
                 
                 //den Themenbereich erstellen
@@ -125,61 +126,54 @@
                 //Daten aus Dictionary lesen
                 NSString *frageString = [eineFrage objectForKey:@"frage"];
                 NSInteger schwierigkeit = [[eineFrage objectForKey:@"schw"]integerValue];
-                NSInteger themenbereichID = [[eineFrage objectForKey:@"themen"]integerValue];
-                NSString *bildURLString = [eineFrage objectForKey:@"bild"];
-                NSInteger antwortID = [[eineFrage objectForKey:@"antw"]integerValue];
+                NSInteger themenbereichID = [[eineFrage objectForKey:@"themenbereich"]integerValue];
+                NSString *bildURLString = [eineFrage objectForKey:@"url"];
+                NSInteger frageID = [[eineFrage objectForKey:@"id"]integerValue];
                 NSString *kursID = [eineFrage objectForKey:@"kursid"];
                 
                 
                 //eine neue Frage mit der ID
-                Frage *neueFrage = [Frage frageMitID:antwortID inManagedObjectContext:self.user.managedObjectContext];
-                neueFrage.schwierigkeit = @(schwierigkeit);
-                neueFrage.themenbereich = [Themenbereich themenbereichMitID:themenbereichID inManagedObjectContext:neueFrage.managedObjectContext];
-                neueFrage.frage = frageString;
-                neueFrage.imageURL = bildURLString;
-                neueFrage.kurs = [Kurs kursFuerID:kursID inManagedObjectContext:self.user.managedObjectContext];                 //Frage einem Kurs zuordnen...
-                
-                
-                //Antworten für diese Frage auslesen und einer Frage zuordnen, danach importieren
-                NSArray *antworten = [jsonDict objectForKey:@"antworten"];
-                
-                for (NSDictionary *eineAntwort in antworten) {
-                    //Daten aus Dictionary lesen
-                    //                NSInteger antwortID = [[eineAntwort objectForKey:@"id"]integerValue]; //derzeit nicht benötigt...
-                    NSInteger frageID = [[eineAntwort objectForKey:@"fragid"]integerValue]; //die ID der Frage, für die diese Antwort ist
-                    NSInteger richtigeAntwort = [[eineAntwort objectForKey:@"truth"]integerValue]-1; //die Nummer der Antwort, die richtig ist, (minus 1, weil Florian auf dem Server nicht anfängt, bei 0 zu zählen - zum jetzigen Zeitpunkt zumindest)
-                    NSString *loesungString = [eineAntwort objectForKey:@"description"]; //die Beschreibung der Lösung für die Frage, die auf Wunsch des Users angezeigt werden kann (Lange Antwort)
-                    NSArray *antwortMoeglichkeiten = [eineAntwort objectForKey:@"antworten"]; //die verschiedenen Antwortmöglichkeiten für diese eine Frage (kurze Antworten)
+                if (frageID && ![frageString isKindOfClass:[NSNull class]]) {
+                    Frage *neueFrage = [Frage frageMitID:frageID inManagedObjectContext:self.user.managedObjectContext];
+                    neueFrage.schwierigkeit = @(schwierigkeit);
+                    neueFrage.themenbereich = [Themenbereich themenbereichMitID:themenbereichID inManagedObjectContext:neueFrage.managedObjectContext];
+                    if (frageString && ![frageString isKindOfClass:[NSNull class]]) neueFrage.frage = frageString;
+                    if (bildURLString && ![kursID isKindOfClass:[NSNull class]]) neueFrage.imageURL = bildURLString;
+                    if (kursID && ![kursID isKindOfClass:[NSNull class]]) neueFrage.kurs = [Kurs kursFuerID:kursID inManagedObjectContext:self.user.managedObjectContext];                 //Frage einem Kurs zuordnen...
                     
-                    //die Frage aus der Datenbank bekommen, die dieser Antwort zugeordnet ist (wirklich nur die vorhandene Frage --> Sinn: siehe nächste if-Abfrage)
-                    Frage *associatedFrage = [Frage vorhandeneFrageMitID:frageID inManagedObjectContext:self.user.managedObjectContext];
+                    //aufgrund der übergebenen Daten muss man dem Themenbereich noch einen Kurs zuweisen, was ja logischerweise der Kurs von einer Frage in diesem Themenbereich sein müsste
+                    neueFrage.themenbereich.kurs = neueFrage.kurs;
                     
-                    //nur wenn eine Frage mit der ID in der Datenbank besteht, speichere auch die Antworten, ansonsten hat das keinen Sinn und auf dem Server ist wahrscheinlich irgendein Fehler passiert
-                    if (associatedFrage) {
+                    
+                    //Antworten für diese Frage auslesen und einer Frage zuordnen, danach importieren
+                    NSArray *antworten = [eineFrage objectForKey:@"answers"];
+                    
+                    for (NSDictionary *eineAntwort in antworten) {
+                        //Daten aus Dictionary lesen
+                        //                NSInteger antwortID = [[eineAntwort objectForKey:@"id"]integerValue]; //derzeit nicht benötigt...
+                        BOOL richtigeAntwort = [[eineAntwort objectForKey:@"truth"]boolValue];
                         
-                        //temporär erstmal, bis Florian das Skript überarbeitet hat, eine Antwort für jede Antwortmöglichkeit erstellen, um bei den Antworten später irgendwann einmal differenzierte Möglichkeiten der Erklärung zu bieten
-                        for (int i = 0; i < antwortMoeglichkeiten.count; i++) {
-                            //die jeweilige Antwortmöglichkeit für den Schleifendurchlauf
-                            NSString *antwortMoeglichkeit = [antwortMoeglichkeiten objectAtIndex:i];
-                            
+                        NSString *loesungString = [eineAntwort objectForKey:@"description"]; //die Beschreibung der Lösung für die Frage, die auf Wunsch des Users angezeigt werden kann (Lange Antwort)
+                        
+                        NSString *antwortMoeglichkeit = [eineAntwort objectForKey:@"text"]; //die Antwortmöglichkeiten für diese Antwort der Frage (kurze Antwort)
+                        
+                        //nur wenn die oben erstellt neue Frage auch vorhanden ist
+                        if (neueFrage) {
                             //eine neue Antwort erstellen --> diese Antwort der Frage zuweisen
-                            Antwort *neueAntwort = [Antwort neueAntwortFuerFrage:associatedFrage inManagedObjectContext:associatedFrage.managedObjectContext];
-                            neueAntwort.antwortKurz = antwortMoeglichkeit;
-                            neueAntwort.antwortLangfassung = loesungString; //die Langfassung der Antwort
+                            Antwort *neueAntwort = [Antwort neueAntwortFuerFrage:neueFrage inManagedObjectContext:neueFrage.managedObjectContext];
+                            if (antwortMoeglichkeit && ![antwortMoeglichkeit isKindOfClass:[NSNull class]]) neueAntwort.antwortKurz = antwortMoeglichkeit;
+                            if (loesungString && ![loesungString isKindOfClass:[NSNull class]]) neueAntwort.antwortLangfassung = loesungString; //die Langfassung der Antwort
                             
-                            //überprüfen, ob die Antwortmöglichkeit die richtige Antwortmöglichkeit ist
-                            BOOL isRichtigeAntwort = NO;
-                            if (i == richtigeAntwort) {
-                                isRichtigeAntwort = YES;
-                            }
-                            
-                            neueAntwort.richtig = [NSNumber numberWithBool:isRichtigeAntwort];
+                            //setzten, ob die Antwortmöglichkeit richtig ist oder falsch
+                            neueAntwort.richtig = [NSNumber numberWithBool:richtigeAntwort];
                         }
                     }
                 }
-                
             }
             
+            
+            //das Datum der letzten Aktualisierung des Quizzes setzen
+            self.user.quizLastUpdate = [NSDate date];
             
             //managedObjectContext speichern
             NSError *savingError;
@@ -212,12 +206,13 @@
 
 //alle Quizfragen löschen
 - (void)loescheAlleQuizfragenDesBenutzers {
+    //alle Antworten löschen
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Frage" inManagedObjectContext:self.user.managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Antwort" inManagedObjectContext:self.user.managedObjectContext];
     [fetchRequest setEntity:entity];
     
     // Specify criteria for filtering which objects to fetch
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"kurs.user == %@", self.user];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"frage.kurs.user == %@", self.user];
     [fetchRequest setPredicate:predicate];
     
     NSBatchDeleteRequest *delete = [[NSBatchDeleteRequest alloc] initWithFetchRequest:fetchRequest];
@@ -227,7 +222,45 @@
     
     if (deleteError) {
         //Fehler beim Löschen
+        NSLog(@"Fehler beim Löschen aller Antworten");
+    }
+
+    
+    
+    //alle Fragen löschen
+    fetchRequest = [[NSFetchRequest alloc] init];
+    entity = [NSEntityDescription entityForName:@"Frage" inManagedObjectContext:self.user.managedObjectContext];
+    [fetchRequest setEntity:entity];
+    
+    // Specify criteria for filtering which objects to fetch
+    predicate = [NSPredicate predicateWithFormat:@"kurs.user == %@", self.user];
+    [fetchRequest setPredicate:predicate];
+    
+    delete = [[NSBatchDeleteRequest alloc] initWithFetchRequest:fetchRequest];
+    
+    [self.user.managedObjectContext executeRequest:delete error:&deleteError];
+    
+    if (deleteError) {
+        //Fehler beim Löschen
         NSLog(@"Fehler beim Löschen aller Fragen");
+    }
+    
+    //alle Themenbereich löschen
+    fetchRequest = [[NSFetchRequest alloc] init];
+    entity = [NSEntityDescription entityForName:@"Themenbereich" inManagedObjectContext:self.user.managedObjectContext];
+    [fetchRequest setEntity:entity];
+    
+    // Specify criteria for filtering which objects to fetch
+    predicate = [NSPredicate predicateWithFormat:@"kurs.user == %@", self.user];
+    [fetchRequest setPredicate:predicate];
+    
+    delete = [[NSBatchDeleteRequest alloc] initWithFetchRequest:fetchRequest];
+    
+    [self.user.managedObjectContext executeRequest:delete error:&deleteError];
+    
+    if (deleteError) {
+        //Fehler beim Löschen
+        NSLog(@"Fehler beim Löschen aller Themenbereiche");
     }
 }
 
@@ -256,12 +289,118 @@
         return fetchedObjects;
     }
 }
+
+- (NSArray<Frage *> *)alleDreißigNeustenFragen {
+    //die folgende Methode mit nil als Parameter aufrufen --> sollte alle neusten Fragen zurückgeben, unabhängig vom Kurs
+    return [self alleDreißigNeustenFragenVonKurs:nil];
+}
+
+- (NSArray<Frage *> *)alleDreißigNeustenFragenVonKurs:(Kurs *)kurs {
+    //alle Fragen aus der Datenbank parsen
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Frage" inManagedObjectContext:self.user.managedObjectContext];
+    [fetchRequest setEntity:entity];
+    
+    // Specify criteria for filtering which objects to fetch
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"kurs.user == %@", self.user];
+    
+    
+    //wenn noch ein Kurs gegeben ist, dann muss auch noch der Kurs in das Predicate mitaufgenommen werden
+    if (kurs) {
+        //das Kurs Predicate
+        NSPredicate *kursPredicate = [NSPredicate predicateWithFormat:@"kurs == %@", kurs];
+        //das neue Predicate ist dann ein zusammengefügtes Und-Predicate aus dem neu hinzugekommenen kursPredicate und dem alten "predicate", was dazu bestimmt war, nur die Fragen für den aktuellen User des QuizControllers zurückzugeben
+        predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, kursPredicate]];
+    }
+    
+    //das Predicate hier zur FetchRequest "hinzufügen"
+    [fetchRequest setPredicate:predicate];
+    
+    
+    // Specify how the fetched objects should be sorted
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"hinzugefuegtAm"
+                                                                   ascending:NO];
+    [fetchRequest setSortDescriptors:[NSArray arrayWithObjects:sortDescriptor, nil]];
+    
+    //nur die ersten 30 nehmen
+    [fetchRequest setFetchLimit:30];
+    
+    NSError *error = nil;
+    NSArray *fetchedObjects = [self.user.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedObjects == nil) {
+        return nil;
+    }
+    else {
+        return fetchedObjects;
+    }
+
+}
+
+- (NSArray<Frage *> *)alleFalschenFragen {
+    //folgende Methode mit nil als Parameter aufrufen, damit alle falschen Fragen unabhängig von einem bestimmten Kurs zurückgegeben werden
+    return [self alleFalschenFragenVonKurs:nil];
+}
+
+- (NSArray<Frage *> *)alleFalschenFragenVonKurs:(Kurs *)kurs {
+    //alle gesuchten Fragen aus der Datenbank parsen
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Frage" inManagedObjectContext:self.user.managedObjectContext];
+    [fetchRequest setEntity:entity];
+    
+    // Specify criteria for filtering which objects to fetch
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"kurs.user == %@ AND anzahlFalschBeantwortet >= anzahlRichtigBeantwortet", self.user]; //falsche Fragen sind dadurch definiert, dass die Anzahl der gegebnen richtigen Antworten unter oder gleich der Anzahl von falsch gegebenen Antworten auf diese Frage (nicht auf die "Unterantworten", sondern ob die Frage als ganzes richtig beantwortet wurde --> das bedeutet, dass der User alle Antworten für diese Frage richtig gegeben haben muss) liegt
+    
+    
+    
+    //wenn noch ein Kurs gegeben ist, dann muss auch noch der Kurs in das Predicate mitaufgenommen werden
+    if (kurs) {
+        //das Kurs Predicate
+        NSPredicate *kursPredicate = [NSPredicate predicateWithFormat:@"kurs == %@", kurs];
+        //das neue Predicate ist dann ein zusammengefügtes Und-Predicate aus dem neu hinzugekommenen kursPredicate und dem alten "predicate", was dazu bestimmt war, nur die falschen Fragen für den aktuellen User des QuizControllers zurückzugeben
+        predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, kursPredicate]];
+    }
+    
+    //das Predicate hier zur FetchRequest "hinzufügen"
+    [fetchRequest setPredicate:predicate];
+    
+    // Specify how the fetched objects should be sorted
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"anzahlFalschBeantwortet"
+                                                                   ascending:NO];
+    [fetchRequest setSortDescriptors:[NSArray arrayWithObjects:sortDescriptor, nil]];
+    
+    
+    NSError *error = nil;
+    NSArray *fetchedObjects = [self.user.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedObjects == nil) {
+        return nil;
+    }
+    else {
+        return fetchedObjects;
+    }
+
+}
+
 - (NSInteger)punktestand {
     return self.user.quizPunkte.integerValue;
 }
 
 - (NSUInteger)numberOfAvailableQuestions {
-    return 0;
+    //alle Fragen für den user zählen
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:[NSEntityDescription entityForName:@"Frage" inManagedObjectContext:self.user.managedObjectContext]];
+    
+    [request setIncludesSubentities:NO]; //Omit subentities. Default is YES (i.e. include subentities)
+    
+    [request setPredicate:[NSPredicate predicateWithFormat:@"kurs.aktiv == true AND kurs.user == %@", self.user]];
+    
+    NSError *err;
+    NSUInteger count = [self.user.managedObjectContext countForFetchRequest:request error:&err];
+    if(count == NSNotFound) {
+        //Handle error
+        return  0;
+    }
+
+    return count;
 }
 
 - (NSFetchRequest *)alleKurseMitFragenFetchedRequest {
@@ -281,5 +420,28 @@
     
     return fetchRequest;
 }
+
+- (NSFetchRequest *)alleThemenbereicheFuerKurs:(Kurs *)kurs {
+    if (kurs) {
+        //alle Fragen aus der Datenbank parsen
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Themenbereich" inManagedObjectContext:self.user.managedObjectContext];
+        [fetchRequest setEntity:entity];
+        
+        // Specify criteria for filtering which objects to fetch
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"kurs == %@", kurs];
+        [fetchRequest setPredicate:predicate];
+        // Specify how the fetched objects should be sorted
+        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"zuletztAktualisiert"
+                                                                       ascending:NO];
+        [fetchRequest setSortDescriptors:[NSArray arrayWithObjects:sortDescriptor, nil]];
+        
+        
+        return fetchRequest;
+    }
+    
+    return nil;
+}
+
 
 @end

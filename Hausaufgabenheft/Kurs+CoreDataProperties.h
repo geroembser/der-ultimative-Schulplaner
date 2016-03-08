@@ -2,8 +2,8 @@
 //  Kurs+CoreDataProperties.h
 //  Hausaufgabenheft
 //
-//  Created by Gero Embser on 27.12.15.
-//  Copyright © 2015 Bischöfliche Marienschule Mönchengladbach. All rights reserved.
+//  Created by Gero Embser on 04.03.16.
+//  Copyright © 2016 Bischöfliche Marienschule Mönchengladbach. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
 //  to delete and recreate this implementation file for your updated model.
@@ -12,6 +12,8 @@
 #import "Kurs.h"
 
 NS_ASSUME_NONNULL_BEGIN
+
+@class Frage, Themenbereich,WebsiteTag;
 
 @interface Kurs (CoreDataProperties)
 
@@ -28,12 +30,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSNumber *schriftlich;
 @property (nullable, nonatomic, retain) NSString *schuljahr;
 @property (nullable, nonatomic, retain) NSSet<Aufgabe *> *aufgaben;
+@property (nullable, nonatomic, retain) NSSet<Frage *> *fragen;
 @property (nullable, nonatomic, retain) NSSet<Klausur *> *klausuren;
 @property (nullable, nonatomic, retain) Lehrer *lehrer;
 @property (nullable, nonatomic, retain) NSSet<Note *> *noten;
 @property (nullable, nonatomic, retain) NSSet<Schulstunde *> *stunden;
+@property (nullable, nonatomic, retain) NSSet<WebsiteTag *> *tags;
+@property (nullable, nonatomic, retain) NSSet<Themenbereich *> *themenbereiche;
 @property (nullable, nonatomic, retain) User *user;
-@property (nullable, nonatomic, retain) NSSet<NSManagedObject *> *tags;
 
 @end
 
@@ -43,6 +47,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)removeAufgabenObject:(Aufgabe *)value;
 - (void)addAufgaben:(NSSet<Aufgabe *> *)values;
 - (void)removeAufgaben:(NSSet<Aufgabe *> *)values;
+
+- (void)addFragenObject:(Frage *)value;
+- (void)removeFragenObject:(Frage *)value;
+- (void)addFragen:(NSSet<Frage *> *)values;
+- (void)removeFragen:(NSSet<Frage *> *)values;
 
 - (void)addKlausurenObject:(Klausur *)value;
 - (void)removeKlausurenObject:(Klausur *)value;
@@ -59,10 +68,15 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)addStunden:(NSSet<Schulstunde *> *)values;
 - (void)removeStunden:(NSSet<Schulstunde *> *)values;
 
-- (void)addTagsObject:(NSManagedObject *)value;
-- (void)removeTagsObject:(NSManagedObject *)value;
-- (void)addTags:(NSSet<NSManagedObject *> *)values;
-- (void)removeTags:(NSSet<NSManagedObject *> *)values;
+- (void)addTagsObject:(WebsiteTag *)value;
+- (void)removeTagsObject:(WebsiteTag *)value;
+- (void)addTags:(NSSet<WebsiteTag *> *)values;
+- (void)removeTags:(NSSet<WebsiteTag *> *)values;
+
+- (void)addThemenbereicheObject:(Themenbereich *)value;
+- (void)removeThemenbereicheObject:(Themenbereich *)value;
+- (void)addThemenbereiche:(NSSet<Themenbereich *> *)values;
+- (void)removeThemenbereiche:(NSSet<Themenbereich *> *)values;
 
 @end
 

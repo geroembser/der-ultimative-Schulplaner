@@ -98,6 +98,7 @@
             //die Antwort in den Button setzen
             [antwortButton setzeAntwort:antwortFuerButton];
             
+            
             //wenn für den jeweiligen Button die temporäre Property gesetzt ist, die angibt, dass diese Antwort in einem Quiz ausgewählt wurde und sich dieser Controller in dem Modus befindet, dass "nurAnzeigeVonErgebnis" und keine Beantwortung erlaubt ist --> dann markiere den entsprechenden Button als ausgewählt bzw. richtig oder falsch --> eigentlich nur wichtig für die Anzeige der Frage, wenn das Ergebnis der letzten Bearbeitung angezeigt werden soll
             if (self.nurAnzeigeVonErgebnis) {
                 if (antwortFuerButton.gesetzteAntwort == AntwortRichtig) {

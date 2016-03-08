@@ -23,6 +23,22 @@
     return news;
 }
 
++ (NewscenterObject *)newsCenterObjectWithMitteilung:(Mitteilung *)mitteilung {
+    if (mitteilung) {
+        NewscenterObject *news = [[NewscenterObject alloc]init];
+        
+        news.typ = NewscenterObjectTypeSchulleitungMessage; //Typ einer Mitteilung, die von der Schulleitung bzw. von Schulseite kommt
+        news.newsObjectTitle = mitteilung.titel;
+        news.newsObjectText = mitteilung.nachricht;
+        news.scheduledDate = mitteilung.datum;
+        
+        
+        return news;
+    }
+    
+    return nil;
+}
+
 #pragma mark - Eigenschaften des Newscenter-Objekts zurückgeben
 - (NSString *)readableDateString {
     //dafür einen DateFormatter benutzen

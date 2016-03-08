@@ -258,6 +258,60 @@
     
 }
 
+#pragma mark - Quiz-Info zurückgeben
+- (NSUInteger)anzahlUnbearbeiteteFragen {
+    //alle Fragen für diesen Kurs, die unbearbeitet sind
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:[NSEntityDescription entityForName:@"Frage" inManagedObjectContext:self.managedObjectContext]];
+    
+    [request setPredicate:[NSPredicate predicateWithFormat:@"kurs == %@ AND anzahlFalschBeantwortet == 0 AND anzahlRichtigBeantwortet == 0", self]];
+    
+    [request setIncludesSubentities:NO]; //keine Untereinheiten mit "zurückgeben"
+    
+    NSError *err;
+    NSUInteger count = [self.managedObjectContext countForFetchRequest:request error:&err];
+    if(count == NSNotFound) {
+        return 0;
+    }
+    
+    return count;
+}
+
+- (NSUInteger)anzahlVerfuegbareFragen {
+    //alle Fragen für diesen Kurs, die verfügbar sind, zählen
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:[NSEntityDescription entityForName:@"Frage" inManagedObjectContext:self.managedObjectContext]];
+    
+    [request setPredicate:[NSPredicate predicateWithFormat:@"kurs == %@", self]];
+    
+    [request setIncludesSubentities:NO]; //keine Untereinheiten mit "zurückgeben"
+    
+    NSError *err;
+    NSUInteger count = [self.managedObjectContext countForFetchRequest:request error:&err];
+    if(count == NSNotFound) {
+        return 0;
+    }
+    
+    return count;
+}
+- (float)prozentRichtigerFragen {
+    //alle Fragen für diesen Kurs, die unbearbeitet sind
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:[NSEntityDescription entityForName:@"Frage" inManagedObjectContext:self.managedObjectContext]];
+    
+    [request setPredicate:[NSPredicate predicateWithFormat:@"kurs == %@ AND anzahlRichtigBeantwortet > anzahlFalschBeantwortet" , self]]; //eine Frage wird als richtig beantwortet angesehen, wenn die Anzahl der richtigen Bearbeitungen den falschen Bearbeitungen überwiegt (siehe "giltAllgemeinAlsRichtigBeantwortet"-Methode der Klasse "Frage"
+    
+    [request setIncludesSubentities:NO]; //keine Untereinheiten mit "zurückgeben"
+    
+    NSError *err;
+    NSUInteger count = [self.managedObjectContext countForFetchRequest:request error:&err];
+    if(count == NSNotFound) {
+        return 0;
+    }
+    
+    return (count/(float)self.anzahlVerfuegbareFragen)*100; //eine Prozentzahl daraus machen
+}
+
 
 #pragma mark - Generell
 //vielleicht, um später das Datum der letzten Änderung in der Datenbank zu speichern (immer dann, wenn eine Eigenschaft des Objekts gesetzt wird

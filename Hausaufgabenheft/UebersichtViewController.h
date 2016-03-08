@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *zumStundenplanButton;
 @property (weak, nonatomic) IBOutlet UILabel *naechsteStundeUeberschriftLabel;
 
+#pragma mark - Newscenter
 @property (weak, nonatomic) IBOutlet UITableView *newscenterTableView;
 @property (weak, nonatomic) IBOutlet UILabel *newscenterStatusLabel;
 @property (weak, nonatomic) IBOutlet UILabel *newscenterLastUpdateLabel;

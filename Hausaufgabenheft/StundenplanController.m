@@ -59,13 +59,17 @@
     NSString *formattedDate = [df stringFromDate:letzeAktualisierung];
     NSLog(@"richtiges Datum?: %@", formattedDate);
     
+    
+    //#debugging, um die Lehrerliste trotz nicht geänderten Daten auf dem Server zu aktualisieren
+//    formattedDate = nil;
+    
     //wenn das zurückgegebene Datum nil ist, dann nimm einen Leerstring
     if (!formattedDate) {
         formattedDate = @"";
     }
     
     //einen DataTask erstellen
-    NSURLSessionDataTask *dataTask = [serverRequest dataTaskForURL:[NSURL URLWithString:@"http://app.marienschule.de/files/scripts/NEW/getAllDataN.php"] withParameterDict:@{@"date":formattedDate}];
+    NSURLSessionDataTask *dataTask = [serverRequest dataTaskForURL:[NSURL URLWithString:@"http://app.marienschule.de/files/scripts/getAllDataN.php"] withParameterDict:@{@"date":formattedDate}];
     
     //diesen DataTask starten
     [dataTask resume];
@@ -176,14 +180,14 @@
                             NSArray *faecher = [jsonLehrer objectForKey:@"faecher"];    //die Fächer des Lehrers
                             
                             //#debugging
-                            //                    NSLog(@"jsonLehrer: %@", jsonLehrer);
+//                                                NSLog(@"jsonLehrer: %@", jsonLehrer);
                             //einen neuen Lehrer erstellen oder einen vorhandenen Aktualisieren (die Klasse Lehrer sollte automatisch die Zuweisung des Lehrers zu seinen jeweiligen Fächern übernehmen)
                             Lehrer *lehrer = [Lehrer lehrerForKuerzel:kuerzel inManagedObjectContext:self.associatedUser.managedObjectContext];
-                            lehrer.name = name;
-                            lehrer.vorname = vorname;
-                            lehrer.titel = titel;
-                            lehrer.email = email;
-                            [lehrer setFaecherArray:faecher];
+                            if (name && ![name isKindOfClass:[NSNull class]]) {lehrer.name = name; }
+                            if (vorname && ![vorname isKindOfClass:[NSNull class]]) lehrer.vorname = vorname;
+                            if (titel && ![titel isKindOfClass:[NSNull class]]) lehrer.titel = titel;
+                            if (email && ![email isKindOfClass:[NSNull class]]) lehrer.email = email;
+                            if (faecher && ![faecher isKindOfClass:[NSNull class]]) [lehrer setFaecherArray:faecher];
                         }
                     }
                 }

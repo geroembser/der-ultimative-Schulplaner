@@ -10,6 +10,7 @@
 #import "Antwort.h"
 #import "Kurs.h"
 #import "NSMutableArray+Shuffling.h"
+#import "User.h"
 
 @interface Frage ()
 
@@ -62,7 +63,7 @@
 }
 
 
-#pragma mark - Infos über Frage bzw. Antworten der Frage zurückgeben
+#pragma mark - Infos über Frage bzw. Antworten der Frage zurückgeben oder setzen
 - (NSArray<Antwort *> *)antwortenFuerFrageSortiertZufaellig:(BOOL)zufaellig mitRichtigerFrageInnerhalbDerErstenElemente:(NSUInteger)richtigeElemente{
     //wenn das ganze schon einmal gemacht wurde, dann gib den bereits erstellten Antwort-Array zurück
     if (self.antwortenArray && self.antwortenArray.count > 0) {
@@ -112,5 +113,30 @@
     }
     
     return antwortString;
+}
+
+- (void)frageBeantwortet:(BOOL)richtig {
+    if (richtig) {
+        self.anzahlRichtigBeantwortet = @(self.anzahlRichtigBeantwortet.integerValue+1);
+        
+        //Anzahl der Punkte beim User hochzählen
+        self.kurs.user.quizPunkte = @(self.kurs.user.quizPunkte.integerValue+1);
+    }
+    else {
+        self.anzahlFalschBeantwortet = @(self.anzahlFalschBeantwortet.integerValue+1);
+    }
+    //die Änderungen speichern
+    NSError *savingError;
+    [self.managedObjectContext save:&savingError];
+    
+    if (savingError) {
+        NSLog(@"Fehler beim Speichern der Daten in die Datenbank");
+    }
+}
+
+- (BOOL)giltAllgemeinAlsRichtigBeantwortet {
+    if (self.anzahlRichtigBeantwortet.integerValue > self.anzahlFalschBeantwortet.integerValue) return YES;
+    
+    return NO;
 }
 @end

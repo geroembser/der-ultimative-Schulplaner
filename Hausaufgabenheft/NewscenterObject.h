@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Mitteilung.h"
 
 //Typedef vom Newscenter-Objekt-Typ
 typedef NS_ENUM(NSUInteger, NewscenterObjectType) {
@@ -25,6 +26,9 @@ typedef NS_ENUM(NSUInteger, NewscenterObjectType) {
 #pragma mark - neue Newscenter-Objekte erzeugen
 ///Diese Methode gibt ein einfaches Newscenter-Objekt mit einem Titel, einem Text und einem Datum zurück
 + (NewscenterObject *)newsCenterObjectWithTitle:(NSString *)title text:(NSString *)text andDate:(NSDate *)date;
+
+///erstellt ein Objekt für das Newscenter mit einer gegebenen Mitteilung
++ (NewscenterObject *)newsCenterObjectWithMitteilung:(Mitteilung *)mitteilung;
 
 #pragma mark - Eigenschaften des Newscenter-Objekts
 
@@ -48,6 +52,9 @@ typedef NS_ENUM(NSUInteger, NewscenterObjectType) {
 
 ///das Datum, an dem diese News "herausgeschickt" wurde bzw. wann etwas fällig ist (bei Aufgaben zum Beispiel)
 @property NSDate *scheduledDate;
+
+///ein eventuell vorhandenes Objekt der Klasse "Mitteilung", angibt, das dieses NewscenterObject eine "Mitteilung" darstellen soll und enthält logischerweise auch die Infos über diese Mitteilung
+@property Mitteilung *mitteilung;
 
 #pragma mark - Methoden, um Eigenschaften des Objekts zurückzugeben
 ///gibt einen lesbaren String vom Datum des News-Objekts zurück

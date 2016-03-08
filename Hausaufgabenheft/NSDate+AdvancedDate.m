@@ -40,14 +40,14 @@
 #pragma mark - Datum-Strings
 - (NSString *)datumStringAlleine {
     NSDateFormatter *df = [[NSDateFormatter alloc]init];
-    [df setDateFormat:@"MM.dd.YYYY"];
+    [df setDateFormat:@"dd.MM.yyyy"];
     
     return [df stringFromDate:self];
 }
 
 - (NSString *)datumUndUhrzeitString {
     NSDateFormatter *df = [[NSDateFormatter alloc]init];
-    [df setDateFormat:@"dd.MM.YYYY, HH.mm"];
+    [df setDateFormat:@"dd.MM.yyyy, HH.mm"];
     
     return [NSString stringWithFormat:@"%@ Uhr", [df stringFromDate:self]];
 }

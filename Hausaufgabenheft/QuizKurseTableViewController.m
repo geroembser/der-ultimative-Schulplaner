@@ -12,11 +12,19 @@
 #import "QuizAbfrageNavController.h"
 #import "FragenOverviewKursTableViewCell.h"
 #import "KurseController.h"
+#import "QuizThemenbereichViewController.h"
+#import "UIViewController+QuizShowingMethods.h"
 
 @interface QuizKurseTableViewController ()
 
 ///der Fetched Results Controller, der die Kurse aus der Datenbank nimmt
 @property NSFetchedResultsController *fetchedResultsController;
+
+///der aktuell durch den Benutzer im TableView ausgewählte Kurs
+@property Kurs *aktuellGewaehlterKurs;
+
+///ein Array mit einer Auswahl von Farben für die einzelnen TableViewCells des TableViews (alle aufeinanderfolgenden TableViewCells sollten unterschiedliche Farben haben, damit das besser aussieht
+@property NSArray *farbenArray;
 
 @end
 
@@ -24,6 +32,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    //die Farben definieren, die im TableView als Hintergrundfarbe für die einzelnen TableViewCells verwendet werden sollen
+    self.farbenArray = @[[UIColor colorWithRed:0.8 green:0.8 blue:0.2 alpha:1.0], [UIColor colorWithRed:0.0 green:0.47 blue:1.0 alpha:1.0], [UIColor colorWithRed:0.61 green:0.09 blue:0.27 alpha:1.0], [UIColor colorWithRed:0.6 green:0.6 blue:0.2 alpha:1.0], [UIColor colorWithRed:1.0 green:0.4 blue:0.0 alpha:1.0]];
     
     //ausgewählte Zellen des TableViews beim Erscheinen des Views abwählen
      self.clearsSelectionOnViewWillAppear = YES;
@@ -67,10 +78,29 @@
     
     cell.kurs = kursForCell;
     
+    //die Hintergrundfarbe setzen auf eine Farbe aus dem farbenArray
+    UIColor *farbe = [self.farbenArray objectAtIndex:indexPath.row%self.farbenArray.count];
+    
+    cell.contentView.backgroundColor = farbe;
+    
+    
+    
     
     return cell;
 }
 
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    //setzte den aktuell ausgewählten Kurs, um ihn in der prepareForSegue-Methode an den QuizThemenbereichViewController übergeben zu können --> das ganze aber schon hier machen, weil es vor dem Aufruf der prepareForSegue-Methode geschehen muss, die durch die Storyboard-Segue von der TableView-Cell zu dem neuen ViewController aufgerufen wird;
+    self.aktuellGewaehlterKurs = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    //aber nur die weiter gehen, wenn auch wirklich Fragen für den Kurs verfügbar sind
+    if (self.aktuellGewaehlterKurs.fragen.allObjects.count <= 0) {
+        return nil;
+    }
+    
+    ///Index-Path zurückgeben, damit die TableViewCell auch wirklich ausgewählt wird --> wenn man nil zurückgeben würde, würde die TableViewCell nicht ausgewählt werden
+    return indexPath;
+}
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //deselect the row
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -110,15 +140,18 @@
 }
 */
 
-/*
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if ([segue.destinationViewController isKindOfClass:[QuizThemenbereichViewController class]]) {
+        QuizThemenbereichViewController *themenbereichVC = [segue destinationViewController];
+        
+        themenbereichVC.kurs = self.aktuellGewaehlterKurs;
+    }
 }
-*/
 
 
 #pragma mark - FRC Delegate
@@ -193,23 +226,32 @@
     //alle vefügbaren Fragen bekommen
     NSArray *alleFragen = [defaultQuizController alleFragen];
     
-    //überprüfen, ob Fragen gegeben sind, ansonsten zeige eine Fehlermeldung an
-    if (alleFragen && alleFragen.count > 0) {
-        //mit allen Fragen ein Quiz erstellen
-        Quiz *neuesQuiz = [Quiz quizZusammenstellenMitArrayVonFragen:alleFragen randomly:YES fuerUser:[User defaultUser]];
-        
-        //erstellt den ViewController mit dem gegebenen Quiz
-        QuizAbfrageNavController *quizNavController = [[QuizAbfrageNavController alloc]initWithQuiz:neuesQuiz];
-        
-        //zeige diesen QuizNavController an
-        [self presentViewController:quizNavController animated:YES completion:nil];
-    }
-    else {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Keine Fragen" message:@"Lokal sind keine Fragen vorhanden. Wähle deine entsprechenenden Kurse in den Einstellungen aus, und lade in der Quiz-Übersicht neue Fragen herunter, wenn dein Lehrer Fragen bereitgestellt hat." preferredStyle:UIAlertControllerStyleAlert];
-        
-        [alertController addAction:[UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleDefault handler:nil]];
-        
-        [self presentViewController:alertController animated:YES completion:nil];
-    }
+    //frage den Array von zusammengestellten Fragen ab (durch eine Kategorie "QuizShowingMethods", die UIViewController erweitert und die die Fragen nach einer Erstellung eines Quiz daraus abfragt)
+    [self frageFragenInArrayAb:alleFragen zufaellig:YES];
 }
+
+- (IBAction)alleNeustenFragenAbfragen:(id)sender {
+    //den Standard-Quiz-Controller bekommen, um Zugriff auf die Fragen zu erhalten
+    QuizController *defaultQuizController = [QuizController defaultQuizController];
+    
+    //alle vefügbaren Fragen bekommen
+    NSArray *alleFragen = [defaultQuizController alleDreißigNeustenFragen];
+    
+    
+    //frage den Array von zusammengestellten Fragen ab (durch eine Kategorie "QuizShowingMethods", die UIViewController erweitert und die die Fragen nach einer Erstellung eines Quiz daraus abfragt)
+    [self frageFragenInArrayAb:alleFragen zufaellig:NO];
+}
+
+- (IBAction)alleFalschenFragenAbfragen:(id)sender {
+    //den Standard-Quiz-Controller bekommen, um Zugriff auf die Fragen zu erhalten
+    QuizController *defaultQuizController = [QuizController defaultQuizController];
+    
+    //alle vefügbaren, als "falsch" markierten, Fragen bekommen
+    NSArray *alleFragen = [defaultQuizController alleFalschenFragen];
+    
+    //frage den Array von zusammengestellten Fragen ab (durch eine Kategorie "QuizShowingMethods", die UIViewController erweitert und die die Fragen nach einer Erstellung eines Quiz daraus abfragt)
+    [self frageFragenInArrayAb:alleFragen zufaellig:YES];
+
+}
+
 @end

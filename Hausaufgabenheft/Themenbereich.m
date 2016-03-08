@@ -58,4 +58,20 @@
 }
 
 
+#pragma mark - Attribute/Methoden, die Daten über den Themenbereich zurückgeben
+- (NSUInteger)anzahlFragen {
+    return self.fragen.count;
+}
+
+- (NSUInteger)anzahlRichtigerFragen {
+    NSUInteger anzahlRichtigerFragen = 0;
+    for (Frage *frage in self.fragen) {
+        if ([frage giltAllgemeinAlsRichtigBeantwortet]) { //so ist eine richtig beantwortete Frage in diesem Fall definiert
+            anzahlRichtigerFragen++;
+        }
+    }
+    
+    return anzahlRichtigerFragen;
+}
+
 @end

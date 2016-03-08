@@ -36,6 +36,12 @@ NS_ASSUME_NONNULL_BEGIN
 ///gibt den allgemeinen String zurück, der als Antwort ausgegeben werden soll
 - (NSString *)allgemeinerAntwortString;
 
+///setzt entsprechende Einstellungen in der Datenbank (zum Beispiel, sodass die Anzahl der richtig oder falsch beantworteten Male hochgezählt wird
+- (void)frageBeantwortet:(BOOL)richtig;
+
+///gibt zurück, ob die Frage intern - und unabhängig von einem Quiz - als richtig beantwortet gilt (das soll der Fall sein, wenn die Anzahl der Male, bei denen die Frage als richtig beantwortet wurde der Anzahl der Male überliegt, bei denen die Frage als falsch beantwortet wurde)
+- (BOOL)giltAllgemeinAlsRichtigBeantwortet;
+
 
 @end
 

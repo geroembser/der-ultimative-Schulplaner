@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "NewscenterObject.h"
+#import "Mitteilung.h"
 
 ///Die TableViewCell, die einen Newscenter-Einträg anzeigen soll
 @interface NewscenterTableViewCell : UITableViewCell
@@ -20,5 +21,7 @@
 
 
 #pragma mark - Eigenschaften der TableViewCell
+///das News-Objekt, was durch die TableViewCell angezeigt werden soll
 @property (nonatomic) NewscenterObject *newsObject;
+
 @end

@@ -11,7 +11,7 @@
 #import "Stundenplan.h"
 #import "AppDelegate.h"
 
-@interface MainTabBarController ()
+@interface MainTabBarController () <UITabBarControllerDelegate>
 
 @end
 
@@ -20,11 +20,48 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    //die Tabbar-Icons richtig sortieren (so wie der User es ausgewählt hat
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    NSUInteger count = self.viewControllers.count;
+    
+    NSArray *savedTabsOrderArray = [defaults arrayForKey:@"tabBarTabsOrder"];
+    
+    if (savedTabsOrderArray.count == count) {
+        BOOL needsReordering = NO;
+        
+        NSMutableDictionary *tabsOrderDictionary = [[NSMutableDictionary alloc] initWithCapacity:count];
+        for (int i = 0; i < count; i ++) {
+            NSNumber *tag = [[NSNumber alloc] initWithInteger:[[[self.viewControllers objectAtIndex:i] tabBarItem] tag]];
+            [tabsOrderDictionary setObject:[NSNumber numberWithInt:i] forKey:[tag stringValue]];
+            
+            if (!needsReordering && ![(NSNumber *)[savedTabsOrderArray objectAtIndex:i] isEqualToNumber:tag]) {
+                needsReordering = YES;
+            }
+        }
+        
+        if (needsReordering) {
+            NSMutableArray *tabsViewControllers = [[NSMutableArray alloc] initWithCapacity:count];
+            for (int i = 0; i < count; i ++) {
+                [tabsViewControllers addObject:[self.viewControllers objectAtIndex:
+                                                [(NSNumber *)[tabsOrderDictionary objectForKey:
+                                                              [(NSNumber *)[savedTabsOrderArray objectAtIndex:i] stringValue]] intValue]]];
+            }
+            
+            self.viewControllers = [NSArray arrayWithArray:tabsViewControllers];
+        }
+    }
+
+    
+    
+    
     //im App-Delegate einen Verweis auf hierhin setzten, damit an anderen Stellen des Programms auf diesen Controller zugegegriffen werden kann
     AppDelegate *appDelegate = [[UIApplication sharedApplication]delegate];
     
     appDelegate.mainTabBarController = self;
     
+    //das Delegate-setzen
+    self.delegate = self;
     
     //Konfiguriere die Bagdes der einzelnen TabBarIcons
     
@@ -68,5 +105,18 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+#pragma mark UITabBarControllerDelegate
+
+- (void)tabBarController:(UITabBarController *)tabBarController didEndCustomizingViewControllers:(NSArray *)viewControllers changed:(BOOL)changed {
+    NSUInteger count = self.viewControllers.count;
+    NSMutableArray *savedTabsOrderArray = [[NSMutableArray alloc] initWithCapacity:count];
+    for (int i = 0; i < count; i ++) {
+        [savedTabsOrderArray addObject:[NSNumber numberWithInteger:[[[self.viewControllers objectAtIndex:i] tabBarItem] tag]]];
+    }
+    
+    [[NSUserDefaults standardUserDefaults] setObject:[NSArray arrayWithArray:savedTabsOrderArray] forKey:@"tabBarTabsOrder"];
+}
+
 
 @end

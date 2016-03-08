@@ -58,8 +58,22 @@ static NSString* const QuizControllerUpdateFailed = @"QuizControllerUpdateFailed
 ///sollte einen Array von den dreißig neusten für den User verfügbaren Fragen zurückgeben
 - (NSArray <Frage *> *)alleDreißigNeustenFragen;
 
+///sollte einen Array von den dreißig neusten Fragen des gegebnen Kurses für den User zurückgeben; nil als Parameter sorgt dafür, dass alle neusten Fragen zurückgegeben werden, unabhängig vom Kurs
+- (NSArray <Frage *> *)alleDreißigNeustenFragenVonKurs:(Kurs *)kurs;
+
+///gibt einen Array von allen falschen Fragen für den User zurück
+- (NSArray <Frage *> *)alleFalschenFragen;
+
+///gibt einen Array von allen falschen Fragen für den User innerhalb des gegebenen Kurses zurück; nil als Parameter sorgt dafür, dass alle falschen Fragen zurückgegeben werden, unabhängig vom Kurs
+- (NSArray <Frage *> *)alleFalschenFragenVonKurs:(Kurs *)kurs;
+
+
 ///gibt eine Fetched Request zurück, mit allen aktiven Kursen des Users des QuizControllers, für die Fragen verfügbar sind
 - (NSFetchRequest *)alleKurseMitFragenFetchedRequest;
+
+///gibt alle Themenbereiche für einen gegebenen Kurs zurück
+- (NSFetchRequest *)alleThemenbereicheFuerKurs:(Kurs *)kurs;
+
 
 #pragma mark - Attribute
 ///der User, für den der QuizController die Quiz-Fragen etc. verwaltet

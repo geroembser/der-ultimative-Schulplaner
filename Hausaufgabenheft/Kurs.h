@@ -61,6 +61,17 @@ NS_ASSUME_NONNULL_BEGIN
 + (Kurs *)neuerKursMitKursID:(NSString *)kursId inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 
 
+#pragma mark - Quiz-Info zurückgeben
+
+///gibt die Anzahl an Fragen zurück, die für den Kurs verfügbar sind
+- (NSUInteger)anzahlVerfuegbareFragen;
+
+///gibt die Anzahl zurück, wie viele Fragen für den Kurs unbearbeitet sind
+- (NSUInteger)anzahlUnbearbeiteteFragen;
+
+///gibt zurück, wie viele Fragen des Kurses richtig beantwortet wurden
+- (float)prozentRichtigerFragen;
+
 
 @end
 
