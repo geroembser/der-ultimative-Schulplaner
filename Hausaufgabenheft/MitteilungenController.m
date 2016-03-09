@@ -80,6 +80,10 @@
 
 #pragma mark - Server-RequestController-Delegate
 - (void)didFinishDownloadingDataTask:(NSURLSessionDataTask *)dataTask withData:(NSData *)downloadedData andError:(NSError *)error forServerRequest:(ServerRequestController *)serverRequestController {
+    
+    //den aktuellen Download-Task auf nil setzen, nachdem der Download abgeschlossen wurde
+    self.mitteilungenDataTask = nil;
+    
     //diese Methode auf dem Main-Thread ausführen, weil CoreData nicht thread-safe ist, und im folgenden diverse CoreData-Operationen durchgeführt werden sollen
     dispatch_async(dispatch_get_main_queue(), ^{
         if (error || downloadedData == nil) {
@@ -163,6 +167,9 @@
                                         //setze das Datum der letzen lokalen Änderung, was beim Erstellen einer neuen Mitteilung automatisch in der Erstellungs-Methode passiert
                                         neueMitteilung.letzteLokaleAenderung = [NSDate date];
                                     }
+                                    
+                                    //dieser Mitteilung eine Nachricht zuweisen
+                                    neueMitteilung.nachricht = nachricht;
                                     
                                     //als nächstes den Titel der Nachricht abfragen und diesen, wenn dieser gültig ist, zur "neuenMitteilung" hinzufügen
                                     NSString *titel = [mitteilungDict objectForKey:@"titel"];

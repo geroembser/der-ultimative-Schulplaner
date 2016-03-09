@@ -18,7 +18,7 @@
 #pragma mark - Initialisierung
 - (instancetype)init {
     //initialisiere den ViewController mit einer Vorgabe aus dem Storyboard
-    self = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@""];
+    self = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"mitteilungViewController"];
     
     if (self) {
         //advanced setup
@@ -62,7 +62,9 @@
         
     //... die Nachricht darstellen, falls eine vorhanden sein sollte
     if (self.mitteilung.nachricht && self.mitteilung.titel.length > 0) {
+        self.nachrichtTextView.selectable = YES; //vorher auf YES setzen...
         self.nachrichtTextView.text = self.mitteilung.nachricht;
+        self.nachrichtTextView.selectable = NO; //...nachher auf NO setzen, weil sonst - warum auch immer - bei jedem neuen Setzen von Text in den TextView, das Textformat resettet wird.
     }
     else {
         //Einen Fehler-Text anzeigen

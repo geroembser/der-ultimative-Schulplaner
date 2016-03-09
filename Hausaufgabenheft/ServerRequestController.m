@@ -70,7 +70,10 @@
             
             if (error) {
                 //Höchstwahrscheinlich ein Verbindungsfehler, der als ein solcher ausgegeben werden muss
-                
+                //Die entsprechende Methode vom Delegate aufrufen
+                if ([self.delegate respondsToSelector:@selector(didFinishDownloadingDataTask:withData:andError:forServerRequest:)]) {
+                    [self.delegate didFinishDownloadingDataTask:dataTask withData:data andError:error forServerRequest:self];
+                }
             }
             //Fehler 400 meint, dass nicht genügend Parameter übergeben wurden, 401 sagt, dass entweder Passwort oder Benutzername oder beides falsch ist
             else if (httpResponse.statusCode == 400) {

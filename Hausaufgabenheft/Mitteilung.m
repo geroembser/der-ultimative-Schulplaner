@@ -25,6 +25,8 @@
         
         //beim Erstellen einer neuen Mitteilung zusätzlich die letzte lokale Änderung setzen
         neueMitteilung.letzteLokaleAenderung = [NSDate date]; //das Datum ist auch das heutige, aktuelle Datum
+        
+        return neueMitteilung;
     }
     
     return nil;

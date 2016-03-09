@@ -28,6 +28,11 @@
 - (void)newscenter:(Newscenter *)newscenter didReloadNewsObject:(NewscenterObject *)newsObj atIndex:(NSUInteger)index;
 ///gibt an, dass das Newscenter neugeladen werden soll
 - (void)newscenterShouldStartReload:(Newscenter *)newscenter;
+
+///gibt an, dass das Newscenter eine Verbindung zum Server hergestellt hat und dieser das Update vorbereitet
+- (void)newscenterDidBeginServerUpdate:(Newscenter *)newscenter;
+///gibt an, dass das Newscenter alle Daten vom Server erfolgreich erhalten und gespeichert hat oder eben, dass ein Fehler passiert ist
+- (void)newscenter:(Newscenter *)newscenter didFinishServerUpdateWithError:(NSError *)error;
 @end
 
 ///Die Newscenter-Klasse, die ein Newscenter bietet und gleichzeitig Methoden und Eigenschaften für seine Verwaltung implementiert.

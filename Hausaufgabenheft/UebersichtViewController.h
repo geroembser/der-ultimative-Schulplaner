@@ -24,7 +24,6 @@
 
 #pragma mark - Newscenter
 @property (weak, nonatomic) IBOutlet UITableView *newscenterTableView;
-@property (weak, nonatomic) IBOutlet UILabel *newscenterStatusLabel;
 @property (weak, nonatomic) IBOutlet UILabel *newscenterLastUpdateLabel;
 
 

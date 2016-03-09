@@ -31,7 +31,7 @@
         news.newsObjectTitle = mitteilung.titel;
         news.newsObjectText = mitteilung.nachricht;
         news.scheduledDate = mitteilung.datum;
-        
+        news.mitteilung = mitteilung;
         
         return news;
     }
@@ -43,7 +43,7 @@
 - (NSString *)readableDateString {
     //dafür einen DateFormatter benutzen
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-    [dateFormatter setDateFormat:@"dd.MM.YYYY, hh.mm"];
+    [dateFormatter setDateFormat:@"dd.MM.YYYY, HH.mm"];
     
     return [dateFormatter stringFromDate:self.scheduledDate];
 }

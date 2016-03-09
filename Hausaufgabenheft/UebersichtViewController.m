@@ -14,10 +14,14 @@
 #import "Newscenter.h"
 #import "NewscenterTableViewCell.h"
 #import "NSDate+AdvancedDate.h"
+#import "MitteilungViewController.h"
 
 @interface UebersichtViewController () <NewscenterDelegate>
 ///das Newscenter, dass  in der Übersicht dargestellt wird
 @property Newscenter *newscenter;
+
+///das Refresh-Control-Element des TableViews
+@property UIRefreshControl *tableViewRefreshControl;
 @end
 
 @implementation UebersichtViewController
@@ -42,6 +46,11 @@
     
     self.newscenterTableView.rowHeight = UITableViewAutomaticDimension;
     self.newscenterTableView.estimatedRowHeight = 60.0; //Durchschnittswert der TableViewCells
+    
+    //einn RefreshControl zum TableView mit den News hinzufügen, um über neue Nachrichten zu informieren
+    self.tableViewRefreshControl = [[UIRefreshControl alloc] init];
+    [self.tableViewRefreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
+    [self.newscenterTableView addSubview:self.tableViewRefreshControl];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -122,9 +131,31 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    //deselect the TableViewCell
+    //das News-Objekt für die TableViewCell bekommen
+    NewscenterObject *newscenterObj = [self.newscenter newscenterObjectAtIndex:indexPath.row];
+    
+    //den Mitteilungs-ViewController anzeigen, wenn das News-Objekt für diese TableViewCell eine "Mitteilung" enthält
+    if (newscenterObj.mitteilung) {
+        //den MitteilungViewController initialisieren, der die Mitteilung angzeigen soll
+        MitteilungViewController *mvc = [[MitteilungViewController alloc]initWithMitteilung:newscenterObj.mitteilung];
+        
+        //den ViewController anzeigen/präsentieren
+        [self presentViewController:mvc animated:YES completion:nil];
+    }
+    
+    //deselect the TableViewCell€
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
+
+#pragma mark Newscenter-TableView Refresh-Control
+- (void)refresh:(UIRefreshControl *)refreshControl {
+    //im Newscenter die News von den Standard-Quellen laden
+    [self.newscenter startCreatingNewsFromDefaultSources];
+    
+    // Do your job, when done:
+    [refreshControl endRefreshing];
+}
+
 
 #pragma mark erweiterte Newscenter-Methoden, für einfachere Programmierung
 ///der Aufruf dieser Methode soll die generellen Informationen und Details zum Newscenter ausgeben
@@ -134,7 +165,7 @@
    
     //wenn das Datum gültig ist...
     if (lastUpdateString && lastUpdateString.length > 0) {
-        self.newscenterStatusLabel.text = [NSString stringWithFormat:@"letztes Update: %@", lastUpdateString];
+        self.newscenterLastUpdateLabel.text = [NSString stringWithFormat:@"letztes Update: %@", lastUpdateString];
     }
 }
 
@@ -154,10 +185,38 @@
 - (void)newscenterShouldStartReload:(Newscenter *)newscenter {
     //den Table-View refreshen (aber auf dem main-thread)
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.newscenterTableView reloadData];
+//        [self.newscenterTableView reloadData];
         
         //die generellen Infos über das Newscenter (damit ist hauptsächlich das Datum der letzten Aktualisierung gemeint) aktualisieren
         [self refreshGeneralNewscenterInfo];
+    });
+}
+- (void)newscenterDidBeginServerUpdate:(Newscenter *)newscenter {
+    //Anzeigen, dass eine Verbindung zum Server aufgebaut wird + das Refresh-Control anzeigen (im TableView)
+    
+    //das Refresh-Control-Element anzeigen und/bzw. animieren
+    [self.tableViewRefreshControl beginRefreshing];
+    
+    //einen Text in das Label setzen, dass den Status bzw. das letzte Update angibt
+    self.newscenterLastUpdateLabel.text = @"Verbindung wird hergestellt...";
+    
+    
+}
+- (void)newscenter:(Newscenter *)newscenter didFinishServerUpdateWithError:(NSError *)error {
+    //Anzeigen, dass das Update abgeschlossen wurde (also genauergesagt die Verbindung mit dem Server) + das Refresh-Control ausblenden (im TableView)
+    //auch auf dem main-thread ausführen
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        //das Refresh-Control-Element anzeigen und/bzw. animieren
+        [self.tableViewRefreshControl endRefreshing];
+        
+        //einen Text in das Label setzen, dass den Status bzw. das letzte Update angibt --> in diesem Fall unterscheiden, ob ein Fehler passiert ist oder nicht
+        if (error) {
+            self.newscenterLastUpdateLabel.text = @"Fehler, später erneut versuchen!";
+        }
+        else {
+            [self refreshGeneralNewscenterInfo]; //der Aufruf dieser Methode sollte das Datum der letzten Aktualisierung entsprechend auf dem user interface anzeigen
+        }
     });
 }
 

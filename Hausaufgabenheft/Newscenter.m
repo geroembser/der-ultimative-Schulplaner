@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 #import <UIKit/UIKit.h>
 
-@interface Newscenter () <MitteilungenControllerDelegate>
+@interface Newscenter () <MitteilungenControllerDelegate, NSFetchedResultsControllerDelegate>
 ///Alle News-Objekte, die von diesem News-Center verwaltet werden
 @property NSMutableArray *newsObjects;
 
@@ -32,19 +32,22 @@
         //initialisiere den newsObject-array
         self.newsObjects = [NSMutableArray new];
         
+        
+        //ein Test-News-Objekt bzw. Willkommens-Newsobjekt (kann als ein solches ausgegeben werden)
+        NewscenterObject *newsObject = [NewscenterObject newsCenterObjectWithTitle:@"Herzlich Willkommen" text:@"Herzlich Willkommen im Newscenter deiner BMS-App" andDate:[NSDate date]];
+        [self.newsObjects addObject:newsObject];
+        
         //einen FetchedResultsController initialisieren, der die Mitteilungen von Lehrerseite verwaltet und aus der Datenbank holt
         self.mitteilungenController = [MitteilungenController defaultController];
         self.mitteilungenController.delegate = self;
         
         
         self.frc = [[NSFetchedResultsController alloc]initWithFetchRequest:[self.mitteilungenController alleMitteilungenFetchRequest] managedObjectContext:self.mitteilungenController.user.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
+        self.frc.delegate = self; //das Delgate setzen
         
         [self.frc performFetch:nil];
         
         
-        //ein Test-News-Objekt bzw. Willkommens-Newsobjekt (kann als ein solches ausgegeben werden)
-        NewscenterObject *newsObject = [NewscenterObject newsCenterObjectWithTitle:@"Herzlich Willkommen" text:@"Herzlich Willkommen im Newscenter deiner BMS-App" andDate:[NSDate date]];
-        [self.newsObjects addObject:newsObject];
     }
     
     return self;
@@ -64,15 +67,16 @@
 #pragma mark - News-Infos
 - (NewscenterObject *)newscenterObjectAtIndex:(NSUInteger)index {
     //solange der gewünscht Index größer als der Index ist, der vorhandenen, Standard-News-Objekte, nimm die Newscenter-Objekte aus dem newsObjects-Array
-    if (index >= self.newsObjects.count) {
-        return [self.newsObjects objectAtIndex:index-(self.numberOfNewsEntries-self.newsObjects.count)];
+    if (index >= (self.numberOfNewsEntries-self.newsObjects.count)) {
+        return [self.newsObjects objectAtIndex:index-(self.numberOfNewsEntries-self.newsObjects.count)]; //der NewsObject-Array ist am Ende aller News-Objekte --> daher diese Befehle, die sozusagen die ersten Objekte aus dem FetchedResultsController nehmen und die restlichen aus dem newsObjects-Array hinzufügen, die hinten an alle News-Objekte angefügt wurden
     }
-    else if (index < self.newsObjects.count) {
+    else if (index < (self.numberOfNewsEntries-self.newsObjects.count)) {
         //ansonten nimm die Daten vom FetchedResultsController --> sind "Mitteilung"s-Objekte
-        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index-self.newsObjects.count inSection:0]; //der Index Path, für das Item, dass durch den FetchedResultsController gewonnen werden soll ist immer der angeforderte Index minus die Anzahl an sonstigen News-Objekten
+        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0]; //der Index Path, für das Item, dass durch den FetchedResultsController gewonnen werden soll
         
         //das Mitteilungs-Objekt vom FetchedResultsController bekommen
         Mitteilung *mitteilung = [self.frc objectAtIndexPath:indexPath];
+
         
         if (mitteilung) {
             //ein NewscenterObjekt für die Mitteilung erstellen
@@ -101,7 +105,11 @@
 
 #pragma mark - Newscenter-Aktionen
 - (void)startCreatingNewsFromDefaultSources {
-
+    //die Delegate-Methoden aufrufen, die angibt, dass die Aktualisierung begonnen hat
+    if (self.delegate && [self.delegate respondsToSelector:@selector(newscenterDidBeginServerUpdate:)]) {
+        [self.delegate newscenterDidBeginServerUpdate:self];
+    }
+    
     //den Download neuer News-Objekte starten, wenn die News von den "Standard-Quellen" zusammengestellt werden sollen
     [self.mitteilungenController downloadNew];
     
@@ -122,8 +130,13 @@
 
 #pragma mark - MitteilungenControllerDelegate
 - (void)mitteilungenController:(MitteilungenController *)mitteilungenController didFinishedRefreshWithError:(NSError *)error {
-    //eine Mitteilung posten, dass das Newscenter aktualisiert werden muss
-    if (self.delegate && [self.delegate respondsToSelector:@selector(newscenterShouldStartReload:)]) {
+    //eine Delegate-Nachricht "verschicken", damit das Delegate weiß, das der Abgleich der Daten mit dem Server erfolgreich war
+    if (self.delegate && [self.delegate respondsToSelector:@selector(newscenter:didFinishServerUpdateWithError:)]) {
+        [self.delegate newscenter:self didFinishServerUpdateWithError:error];
+    }
+    
+    //eine Mitteilung posten, dass das Newscenter aktualisiert werden muss --> muss aber logischerweise nur aktualisiert werden, wenn kein Fehler passiert ist
+    if (!error && self.delegate && [self.delegate respondsToSelector:@selector(newscenterShouldStartReload:)]) {
         [self.delegate newscenterShouldStartReload:self];
     }
 }
