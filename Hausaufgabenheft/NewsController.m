@@ -361,7 +361,7 @@ NSURLSession *imagesDownloadSession;
         News *newsToAdd = [tempNews objectAtIndex:i];
         
         [self.news addObject:newsToAdd];
-        NSLog(@"INDEX: %lu", (unsigned long)self.news.count-1);
+//        NSLog(@"INDEX: %lu", (unsigned long)self.news.count-1);
         if (hasValidDelegate) {
             [self.delegate newsController:self didInsertObject:newsToAdd atIndex:self.news.count-1]; //-1, weil das Objekt in der Zeile darüber zum Array hinzugefügt wird
         }

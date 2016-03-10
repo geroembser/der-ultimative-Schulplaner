@@ -8,6 +8,7 @@
 
 #import "News.h"
 #import "NSString+HTML.h"
+#import "User.h"
 
 @implementation News
 
@@ -95,6 +96,23 @@
         //aber die Relevanz nicht um die Anzahl des Vorkommens erhöhen, sondern nur um das Viertel davon oder eben 0, wenn das Viertel davon kleiner als 1 ist
         NSInteger addToRelevance = numberOfMatches; //(long)(numberOfMatches/4);
         self.relevanz+=addToRelevance;
+    }
+    
+    //dann noch zählen, wie oft der Name des Benutzers im Text vorkommt --> dann die Relevanz mal das 10-fache hochzählen
+    User *user = [User defaultUser];
+    
+    regex = [NSRegularExpression regularExpressionWithPattern:user.fullName options:NSRegularExpressionCaseInsensitive error:&error];
+    numberOfMatches = [regex numberOfMatchesInString:plainHTMLContent options:0 range:NSMakeRange(0, plainHTMLContent.length)];
+    if (!error) {
+        //wenn kein Fehler passiert ist, die Relevanz erhöhen, je nachdem, wie oft der Name im plainHTMLContent vorkam
+        NSInteger addToRelevance = numberOfMatches*10; //mal das Zehnfache
+        self.relevanz+=addToRelevance;
+    }
+    
+    //zusätlich gucken, ob der Autor vielleicht gleich dem Benutzer ist --> die Relevanz sollte dann ebenfalls erhöht werden
+    if ([self.author isEqualToString:user.fullName]) {
+        //den Artikel auch höcher einstufen
+        self.relevanz+=5; //die Relevanz um fünf erhöhen
     }
     
     //wenn die Schleife oben nicht beendet worden sein sollte, und numberOfMathes gleich 0 ist und man zu diesem Punkt der Code-Ausführung gelangt, dann ist die Relevanz des Tags für diese News - aber nur für diesen Tag - gleich 0;

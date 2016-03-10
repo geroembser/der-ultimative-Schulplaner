@@ -55,6 +55,11 @@
 /* constraints */
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *weiterButtonHeightConstraint;
 
+
+#pragma mark - UI other Outlets
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+
+
 #pragma mark - Fehlerhaftes Passwort später - Neu-Anmelden
 //hier Methoden bereitstellen, die ermöglichen, die Zugangsdaten erneut einzugeben und einen entsprechenden Text anzuzeigen, der darauf hinweist, dass das Passwort oder der Benutzername nicht mehr stimmt
 - (LoginViewController *)loginViewControllerForFailedUserAccessData;

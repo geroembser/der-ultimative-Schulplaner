@@ -11,6 +11,9 @@
 #import "AufgabeTableViewCell.h"
 #import "AufgabenFilterPrefViewController.h"
 #import "AufgabeFilter.h"
+#import "SpecialTaskCreationViewController.h"
+#import <QuartzCore/QuartzCore.h>
+
 
 @interface AufgabenOverviewViewController () <NSFetchedResultsControllerDelegate>
 ///der FetchedResultsController, der die Anzeige der Aufgaben koordiniert
@@ -66,12 +69,20 @@
 
 ///Die Action, die ausgeführt wird, wenn ein Button angetippt wurde, mit dem ein neue Aufgabe erstellt werden soll bzw. der ViewController, der das übernehmen soll, angezeigt wird.
 - (IBAction)neueAufgabeButtonClicked:(UIButton *)sender {
+    //einen neuen SpecialTaskCreationViewController erstellen
+    SpecialTaskCreationViewController *tcvc = [[SpecialTaskCreationViewController alloc]init];
     
-    //eine neue Instanz davon erstellen
-    AufgabeEditViewController *neueAufgabeViewController = [[AufgabeEditViewController alloc]init];
     
-    //den ViewController anzeigen
-    [self presentViewController:neueAufgabeViewController animated:YES completion:nil];
+    //diesen Anzeigen
+    [self presentViewController:tcvc animated:NO completion:nil]; //hier animated = NO, damit es besser aussieht
+    
+    
+    //alte (nicht so moderne und effiziente Variante zum Erstellen neuer Aufgaben)
+//    //eine neue Instanz davon erstellen
+//    AufgabeEditViewController *neueAufgabeViewController = [[AufgabeEditViewController alloc]init];
+//    
+//    //den ViewController anzeigen
+//    [self presentViewController:neueAufgabeViewController animated:YES completion:nil];
     
 }
 

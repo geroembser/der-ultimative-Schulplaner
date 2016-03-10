@@ -10,7 +10,7 @@
 #import "ServerUserDataController.h"
 #import "KurseWaehlenViewController.h"
 
-@interface LoginViewController () <ServerUserDataControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource> {
+@interface LoginViewController () <ServerUserDataControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIScrollViewDelegate> {
     UITextField *activeField; //das aktuell aktive Textfeld, was immer wieder durch die Delegate-Methoden von den Textfeldern gesetzt wird
     UIPickerView *stufePickerView; //der Picker-View für die Auswahl der Stufe
     NSArray *pickerViewStufen; //array von Strings mit Stufenbezeichnungen für den stufePickerView
@@ -28,6 +28,25 @@
  */
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    //Die Benachrichtigunen für das Anzeigen und Verschwinden des Keyboards registrien, um die ContentInsets des ScrollViews entsprechend zu ändern
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardDidHideNotification object:nil];
+    
+    //einen Input-Accessory-View zum Stufen-Textfeld setzen
+    UIToolbar *toolbar = [[UIToolbar alloc]init];
+    [toolbar setBarStyle:UIBarStyleDefault];
+    toolbar.userInteractionEnabled = YES;
+    [toolbar sizeToFit];
+    
+    //die einzelnen BarButtonItems setzen
+    UIBarButtonItem *spaceButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    UIBarButtonItem *fertigButton = [[UIBarButtonItem alloc]initWithTitle:@"fertig" style:UIBarButtonItemStylePlain target:self action:@selector(resignFirstResponderOfActiveField)];
+    
+    //die Items der Toolbar zuweisen
+    [toolbar setItems:@[spaceButton, fertigButton]];
+    
+    self.stufeTextfield.inputAccessoryView = toolbar;
     
     
     //konfiguriere den Input-View für das Stufe textfield
@@ -269,6 +288,12 @@
     //überprüfen, ob das gewählte Textfeld das Stufen-Textfeld ist, dann nämlich als Input View den StufenPickerView nehmen
     if (textField == self.stufeTextfield) {
         textField.inputView = stufePickerView;
+        
+        //und den aktuell ausgewählten Wert im ersten Komponenten des stufePickerViews direkt in das Textfeld schreiben, wenn der Text davon noch leer ist
+        if (textField.text.length < 1) {
+            //den aktuell ausgewählten Wert der aktuell ausgewählten Zelle des Komponenten des stufePickerViews nehmen
+            textField.text = [pickerViewStufen objectAtIndex:[stufePickerView selectedRowInComponent:0]];
+        }
     }
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField {
@@ -302,6 +327,12 @@
     return YES;
 }
 
+#pragma mark - andere Textfield Methoden
+///die Bearbeitung vom aktuellen Textfeld wird dadurch abgebrochen
+- (void)resignFirstResponderOfActiveField {
+    [activeField resignFirstResponder];
+}
+
 #pragma mark - PickerView Delegate
 //Die üblichen Delegate Methdoen für den UIPickerView
 
@@ -317,6 +348,7 @@
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
     return [pickerViewStufen objectAtIndex:row];
 }
+
 
 
 #pragma mark - Weiter-Button
@@ -390,6 +422,53 @@
     [alertController addAction:[UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleDefault handler:nil]];
     
     [self presentViewController:alertController animated:YES completion:nil];
+}
+
+#pragma mark - Keyboard Notification
+///wird aufgerufen, wenn die Tastatur angezeigt wird und ändert die contentInsets des ScrollViews entsprechend ab
+- (void)keyboardWasShown:(NSNotification *)aNotification {
+    //Die Informationen zur Tastatur aus der userInfo-Dictionary von der gegebenen Notification entnehmen
+    NSDictionary *info = [aNotification userInfo];
+    
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey]CGRectValue].size;
+    
+    //die neuen ContentInsets kalkulieren und dem ScrollView zuweisen
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
+    self.scrollView.contentInset = contentInsets;
+    self.scrollView.scrollIndicatorInsets = contentInsets; //auch den scrollIndicators die insets zuweisen, damit die scroll-indicators nicht hinter der Tastatur verschwinden, sobald man nach unten scrollt
+    
+    //wenn das aktive Textfeld oder der aktive TextView vom Keyboard verdeckt wird, scrolle es nach oben
+    CGRect aRect = self.view.frame;
+    aRect.size.height -= kbSize.height;
+    
+    //definiere den Punkt, für den geprüft werden soll, ob er vom Textfeld verdeckt wird
+    CGPoint punkToCheck = activeField.frame.origin;
+    
+    //überprüfe, ob das aktive Textfeld vom Keyboard verdeckt wird
+    if (!CGRectContainsPoint(aRect, punkToCheck)) {
+        //erstelle den Punkt, zu dem gescrollt werden soll
+        
+        //dafür erst wieder zwischen Textfeld und Textview unterscheiden
+        CGFloat scrollPointY = activeField.frame.origin.y;
+        
+        CGPoint scrollPoint = CGPointMake(0.0, scrollPointY-kbSize.height);
+        
+        //dann scrolle zu dem gerade erstellten Punkt
+        [self.scrollView setContentOffset:scrollPoint animated:YES];
+    }
+}
+///diese Methode setzt die contentInsets wieder an allen Rändern auf 0, wenn die Tastatur ausgeblendet wird
+- (void)keyboardWillBeHidden:(NSNotification *)aNotification {
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0);
+    self.scrollView.contentInset = contentInsets;
+    self.scrollView.scrollIndicatorInsets = contentInsets;
+}
+
+
+#pragma mark - ScrollView-Delegate
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    //wenn der ScrollView fertig gescrollt wurde, die Tastatur ausblenden
+    [activeField resignFirstResponder];
 }
 
 @end
