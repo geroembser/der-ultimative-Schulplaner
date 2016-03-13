@@ -11,60 +11,67 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="80"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0iD-Ar-zaT">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0iD-Ar-zaT" customClass="SpecialTaskCreationKursButton">
                     <rect key="frame" x="300" y="0.0" width="300" height="40"/>
-                    <state key="normal" title="Erdkunde"/>
+                    <state key="normal" title="---"/>
+                    <connections>
+                        <action selector="zweiterKursVorschlagButtonClicked:" destination="iN0-l3-epB" eventType="touchUpInside" id="jV5-pZ-RFa"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="guS-3g-trw">
                     <rect key="frame" x="300" y="40" width="150" height="40"/>
-                    <state key="normal" title="in 2 Tagen (Do)"/>
+                    <state key="normal" title="in 2 T. (Do)"/>
+                    <connections>
+                        <action selector="in2TagenAbgabedatumButtonClicked:" destination="iN0-l3-epB" eventType="touchUpInside" id="0Jw-Zr-LqC"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NXG-6g-Th3">
                     <rect key="frame" x="450" y="40" width="150" height="40"/>
-                    <state key="normal" title="in 1 Woche (Di)"/>
+                    <state key="normal" title="in 1 W. (Di)"/>
+                    <connections>
+                        <action selector="in1WocheAbgabedatumButtonClicked:" destination="iN0-l3-epB" eventType="touchUpInside" id="XHs-aS-xNg"/>
+                    </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oQp-c4-thM">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oQp-c4-thM" customClass="SpecialTaskCreationKursButton">
                     <rect key="frame" x="0.0" y="0.0" width="300" height="40"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="40" id="QdJ-2P-jFx"/>
-                    </constraints>
-                    <state key="normal" title="Englisch"/>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="QdJ-2P-jFx"/>
-                        </mask>
-                    </variation>
+                    <state key="normal" title="---"/>
+                    <connections>
+                        <action selector="ersterKursVorschlagButtonClicked:" destination="iN0-l3-epB" eventType="touchUpInside" id="XP5-VA-d5A"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rdN-KN-bKl">
                     <rect key="frame" x="0.0" y="40" width="300" height="40"/>
-                    <state key="normal" title="nächste Stunde (Mi)"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="LeR-bD-d5O"/>
+                    </constraints>
+                    <state key="normal" title="nächste Std. (Mi)"/>
+                    <connections>
+                        <action selector="naechsteStundeAbgabedatumButtonClicked:" destination="iN0-l3-epB" eventType="touchUpInside" id="3Ki-cA-uaO"/>
+                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="rdN-KN-bKl" firstAttribute="top" secondItem="oQp-c4-thM" secondAttribute="bottom" id="0KE-vI-dCY"/>
+                <constraint firstItem="guS-3g-trw" firstAttribute="height" secondItem="rdN-KN-bKl" secondAttribute="height" id="2zK-Zr-fMs"/>
                 <constraint firstItem="NXG-6g-Th3" firstAttribute="leading" secondItem="guS-3g-trw" secondAttribute="trailing" id="35o-Su-9RK"/>
                 <constraint firstItem="NXG-6g-Th3" firstAttribute="top" secondItem="0iD-Ar-zaT" secondAttribute="bottom" id="A5K-rR-dAt"/>
                 <constraint firstItem="0iD-Ar-zaT" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="ApG-0w-bam"/>
-                <constraint firstItem="rdN-KN-bKl" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="0.5" id="DNe-tj-eNY"/>
-                <constraint firstItem="0iD-Ar-zaT" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="0.5" id="Dct-Hi-BQf"/>
                 <constraint firstItem="guS-3g-trw" firstAttribute="leading" secondItem="rdN-KN-bKl" secondAttribute="trailing" id="H5v-hK-aUM"/>
-                <constraint firstItem="guS-3g-trw" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="0.5" id="IVe-DA-h6U"/>
                 <constraint firstItem="NXG-6g-Th3" firstAttribute="leading" secondItem="guS-3g-trw" secondAttribute="trailing" id="K9A-Hb-7pg"/>
                 <constraint firstItem="guS-3g-trw" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.25" id="LMX-IY-tYD"/>
                 <constraint firstItem="oQp-c4-thM" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.5" id="MtO-Xe-GCR"/>
                 <constraint firstItem="0iD-Ar-zaT" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.5" id="PSZ-ga-qRv"/>
-                <constraint firstItem="oQp-c4-thM" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="0.5" id="Q1H-EY-qIz"/>
-                <constraint firstItem="NXG-6g-Th3" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="0.5" id="Qpi-14-YCy"/>
                 <constraint firstAttribute="bottom" secondItem="guS-3g-trw" secondAttribute="bottom" id="ZRf-lX-MiM"/>
                 <constraint firstAttribute="bottom" secondItem="NXG-6g-Th3" secondAttribute="bottom" id="ZeP-9a-Cyg"/>
                 <constraint firstAttribute="trailing" secondItem="NXG-6g-Th3" secondAttribute="trailing" id="aZg-qN-Tly"/>
                 <constraint firstItem="guS-3g-trw" firstAttribute="top" secondItem="0iD-Ar-zaT" secondAttribute="bottom" id="cJq-GX-FOx"/>
                 <constraint firstAttribute="bottom" secondItem="rdN-KN-bKl" secondAttribute="bottom" id="da0-18-VDh"/>
+                <constraint firstItem="NXG-6g-Th3" firstAttribute="height" secondItem="guS-3g-trw" secondAttribute="height" id="dkf-su-Mgv"/>
                 <constraint firstItem="rdN-KN-bKl" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.5" id="g5R-DD-2Ez"/>
                 <constraint firstItem="oQp-c4-thM" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="gWv-Mx-lgH"/>
                 <constraint firstAttribute="trailing" secondItem="0iD-Ar-zaT" secondAttribute="trailing" id="heB-uC-Zsq"/>
                 <constraint firstItem="guS-3g-trw" firstAttribute="leading" secondItem="rdN-KN-bKl" secondAttribute="trailing" id="ogJ-eB-xoG"/>
+                <constraint firstItem="rdN-KN-bKl" firstAttribute="top" secondItem="oQp-c4-thM" secondAttribute="bottom" id="p9q-i6-63R"/>
                 <constraint firstItem="0iD-Ar-zaT" firstAttribute="leading" secondItem="oQp-c4-thM" secondAttribute="trailing" id="pcg-AH-efr"/>
                 <constraint firstItem="rdN-KN-bKl" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="szQ-fl-Akv"/>
                 <constraint firstItem="oQp-c4-thM" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="v1q-G8-8Ra"/>
@@ -72,6 +79,14 @@
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="abgabedatumReiheHeightConstraint" destination="LeR-bD-d5O" id="bZX-7s-x3b"/>
+                <outlet property="ersterKursVorschlagButton" destination="oQp-c4-thM" id="Shq-mw-127"/>
+                <outlet property="in1WocheAbgabedatumButton" destination="NXG-6g-Th3" id="llh-aS-DTc"/>
+                <outlet property="in2TagenAbgabedatumButton" destination="guS-3g-trw" id="Gte-g5-OAA"/>
+                <outlet property="naechsteStundeAbgabedatumButton" destination="rdN-KN-bKl" id="mOi-eK-vCV"/>
+                <outlet property="zweiterKursVorschlagButton" destination="0iD-Ar-zaT" id="LQC-Qa-NnK"/>
+            </connections>
             <point key="canvasLocation" x="847" y="369"/>
         </view>
     </objects>

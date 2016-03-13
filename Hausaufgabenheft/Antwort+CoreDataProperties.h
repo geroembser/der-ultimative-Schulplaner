@@ -1,8 +1,8 @@
 //
 //  Antwort+CoreDataProperties.h
-//  Hausaufgabenheft
+//  BMS-App
 //
-//  Created by Gero Embser on 28.02.16.
+//  Created by Gero Embser on 12.03.16.
 //  Copyright © 2016 Bischöfliche Marienschule Mönchengladbach. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -18,7 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSString *antwortKurz;
 @property (nullable, nonatomic, retain) NSString *antwortLangfassung;
 @property (nullable, nonatomic, retain) NSNumber *richtig;
-@property (nullable, nonatomic, retain) NSManagedObject *frage;
+@property (nullable, nonatomic, retain) NSNumber *antwortID;
+@property (nullable, nonatomic, retain) Frage *frage;
 
 @end
 

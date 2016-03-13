@@ -1,8 +1,8 @@
 //
 //  Antwort+CoreDataProperties.m
-//  Hausaufgabenheft
+//  BMS-App
 //
-//  Created by Gero Embser on 28.02.16.
+//  Created by Gero Embser on 12.03.16.
 //  Copyright © 2016 Bischöfliche Marienschule Mönchengladbach. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -16,6 +16,7 @@
 @dynamic antwortKurz;
 @dynamic antwortLangfassung;
 @dynamic richtig;
+@dynamic antwortID;
 @dynamic frage;
 
 @end

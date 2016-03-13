@@ -76,125 +76,147 @@
     //den questionDownloadTask kauf nil setzen, damit ein erneuter Downloadversuch im gleichen QuizController auch funktionieren kann (siehe Methode: "downloadNeueFragen" vom QuizController)
     self.questionDownloadTask = nil;
     
-    if (downloadedData && !error) {
-        //die heruntergeladenen Daten überprüfen
-        NSError *parsingError;
-        NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:downloadedData options:0 error:&parsingError];
+    //auf dem Main-Thread ausführen
+    dispatch_async(dispatch_get_main_queue(), ^{
         
-        if (parsingError) {
-            //Fehler-Notification posten
-            [[NSNotificationCenter defaultCenter]postNotificationName:QuizControllerUpdateFailed object:self userInfo:@{NSLocalizedFailureReasonErrorKey : parsingError.localizedDescription}];
-        }
-        else {
-            //die Daten auslesen
+        if (downloadedData && !error) {
+            //die heruntergeladenen Daten überprüfen
+            NSError *parsingError;
+            NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:downloadedData options:0 error:&parsingError];
             
-            
-            //Themenbereiche auslesen und importieren
-            NSArray *themen = [jsonDict objectForKey:@"themes"];
-            
-            for (NSDictionary *einThema in themen) {
-                //Daten aus Dictionary lesen und importieren
-                NSInteger themaID = [[einThema objectForKey:@"id"]integerValue];
-                NSString *themaTitel = [einThema objectForKey:@"titel"];
-                NSString *beschreibung = [einThema objectForKey:@"wInfos"];
-                NSString *datumString = [einThema objectForKey:@"change"];
-                
-                //Datum formatieren
-                NSDateFormatter *df = [[NSDateFormatter alloc]init];
-                [df setDateFormat:@"dd.MM.yyyy HH:mm"];
-                [df setTimeZone:[NSTimeZone defaultTimeZone]];
-                NSDate *themaLetzteAktualisierung = [df dateFromString:datumString];
-                
-                //den Themenbereich erstellen
-                Themenbereich *themenbereich = [Themenbereich themenbereichMitID:themaID inManagedObjectContext:self.user.managedObjectContext];
-                themenbereich.name = themaTitel;
-                
-                //weitere Attribute für den Themenbereich setzen
-                //überprüfen, ob gültige Werte gegeben wurden
-                if (beschreibung && ![beschreibung isKindOfClass:[NSNull class]]) {
-                    themenbereich.beschreibung = beschreibung;
-                }
-                if (themaLetzteAktualisierung && ![themaLetzteAktualisierung isKindOfClass:[NSNull class]]) {
-                    themenbereich.zuletztAktualisiert = themaLetzteAktualisierung;
-                }
+            if (parsingError) {
+                //Fehler-Notification posten
+                [[NSNotificationCenter defaultCenter]postNotificationName:QuizControllerUpdateFailed object:self userInfo:@{NSLocalizedFailureReasonErrorKey : parsingError.localizedDescription}];
             }
-            
-            //Fragen auslesen und einem Themenbereich zuordnen, danach importieren
-            NSArray *fragen = [jsonDict objectForKey:@"frag"];
-            
-            for (NSDictionary *eineFrage in fragen) {
-                //Daten aus Dictionary lesen
-                NSString *frageString = [eineFrage objectForKey:@"frage"];
-                NSInteger schwierigkeit = [[eineFrage objectForKey:@"schw"]integerValue];
-                NSInteger themenbereichID = [[eineFrage objectForKey:@"themenbereich"]integerValue];
-                NSString *bildURLString = [eineFrage objectForKey:@"url"];
-                NSInteger frageID = [[eineFrage objectForKey:@"id"]integerValue];
-                NSString *kursID = [eineFrage objectForKey:@"kursid"];
+            else {
+                //die Daten auslesen
                 
                 
-                //eine neue Frage mit der ID
-                if (frageID && ![frageString isKindOfClass:[NSNull class]]) {
-                    Frage *neueFrage = [Frage frageMitID:frageID inManagedObjectContext:self.user.managedObjectContext];
-                    neueFrage.schwierigkeit = @(schwierigkeit);
-                    neueFrage.themenbereich = [Themenbereich themenbereichMitID:themenbereichID inManagedObjectContext:neueFrage.managedObjectContext];
-                    if (frageString && ![frageString isKindOfClass:[NSNull class]]) neueFrage.frage = frageString;
-                    if (bildURLString && ![kursID isKindOfClass:[NSNull class]]) neueFrage.imageURL = bildURLString;
-                    if (kursID && ![kursID isKindOfClass:[NSNull class]]) neueFrage.kurs = [Kurs kursFuerID:kursID inManagedObjectContext:self.user.managedObjectContext];                 //Frage einem Kurs zuordnen...
+                //Themenbereiche auslesen und importieren
+                NSArray *themen = [jsonDict objectForKey:@"themes"];
+                
+                for (NSDictionary *einThema in themen) {
+                    //Daten aus Dictionary lesen und importieren
+                    NSInteger themaID = [[einThema objectForKey:@"id"]integerValue];
+                    NSString *themaTitel = [einThema objectForKey:@"titel"];
+                    NSString *beschreibung = [einThema objectForKey:@"wInfos"];
+                    NSString *datumString = [einThema objectForKey:@"change"];
                     
-                    //aufgrund der übergebenen Daten muss man dem Themenbereich noch einen Kurs zuweisen, was ja logischerweise der Kurs von einer Frage in diesem Themenbereich sein müsste
-                    neueFrage.themenbereich.kurs = neueFrage.kurs;
+                    //Datum formatieren
+                    NSDateFormatter *df = [[NSDateFormatter alloc]init];
+                    [df setDateFormat:@"dd.MM.yyyy HH:mm"];
+                    [df setTimeZone:[NSTimeZone defaultTimeZone]];
+                    NSDate *themaLetzteAktualisierung = [df dateFromString:datumString];
+                    
+                    //den Themenbereich erstellen
+                    Themenbereich *themenbereich = [Themenbereich themenbereichMitID:themaID inManagedObjectContext:self.user.managedObjectContext];
+                    themenbereich.name = themaTitel;
+                    
+                    //weitere Attribute für den Themenbereich setzen
+                    //überprüfen, ob gültige Werte gegeben wurden
+                    if (beschreibung && ![beschreibung isKindOfClass:[NSNull class]]) {
+                        themenbereich.beschreibung = beschreibung;
+                    }
+                    if (themaLetzteAktualisierung && ![themaLetzteAktualisierung isKindOfClass:[NSNull class]]) {
+                        themenbereich.zuletztAktualisiert = themaLetzteAktualisierung;
+                    }
+                }
+                
+                //Fragen auslesen und einem Themenbereich zuordnen, danach importieren
+                NSArray *fragen = [jsonDict objectForKey:@"frag"];
+                
+                for (NSDictionary *eineFrage in fragen) {
+                    //Daten aus Dictionary lesen
+                    NSString *frageString = [eineFrage objectForKey:@"frage"];
+                    NSInteger schwierigkeit = [[eineFrage objectForKey:@"schw"]integerValue];
+                    NSInteger themenbereichID = [[eineFrage objectForKey:@"themenbereich"]integerValue];
+                    NSString *bildURLString = [eineFrage objectForKey:@"url"];
+                    NSInteger frageID = [[eineFrage objectForKey:@"id"]integerValue];
+                    NSString *kursID = [eineFrage objectForKey:@"kursid"];
                     
                     
-                    //Antworten für diese Frage auslesen und einer Frage zuordnen, danach importieren
-                    NSArray *antworten = [eineFrage objectForKey:@"answers"];
-                    
-                    for (NSDictionary *eineAntwort in antworten) {
-                        //Daten aus Dictionary lesen
-                        //                NSInteger antwortID = [[eineAntwort objectForKey:@"id"]integerValue]; //derzeit nicht benötigt...
-                        BOOL richtigeAntwort = [[eineAntwort objectForKey:@"truth"]boolValue];
+                    //eine neue Frage mit der ID
+                    if (frageID && ![frageString isKindOfClass:[NSNull class]]) {
+                        Frage *neueFrage = [Frage frageMitID:frageID inManagedObjectContext:self.user.managedObjectContext];
+                        neueFrage.schwierigkeit = @(schwierigkeit);
+                        neueFrage.themenbereich = [Themenbereich themenbereichMitID:themenbereichID inManagedObjectContext:neueFrage.managedObjectContext];
+                        if (frageString && ![frageString isKindOfClass:[NSNull class]]) neueFrage.frage = frageString;
+                        if (bildURLString && ![kursID isKindOfClass:[NSNull class]]) neueFrage.imageURL = bildURLString;
+                        if (kursID && ![kursID isKindOfClass:[NSNull class]]) neueFrage.kurs = [Kurs kursFuerID:kursID inManagedObjectContext:self.user.managedObjectContext];                 //Frage einem Kurs zuordnen...
                         
-                        NSString *loesungString = [eineAntwort objectForKey:@"description"]; //die Beschreibung der Lösung für die Frage, die auf Wunsch des Users angezeigt werden kann (Lange Antwort)
+                        //aufgrund der übergebenen Daten muss man dem Themenbereich noch einen Kurs zuweisen, was ja logischerweise der Kurs von einer Frage in diesem Themenbereich sein müsste
+                        neueFrage.themenbereich.kurs = neueFrage.kurs;
                         
-                        NSString *antwortMoeglichkeit = [eineAntwort objectForKey:@"text"]; //die Antwortmöglichkeiten für diese Antwort der Frage (kurze Antwort)
                         
-                        //nur wenn die oben erstellt neue Frage auch vorhanden ist
-                        if (neueFrage) {
-                            //eine neue Antwort erstellen --> diese Antwort der Frage zuweisen
-                            Antwort *neueAntwort = [Antwort neueAntwortFuerFrage:neueFrage inManagedObjectContext:neueFrage.managedObjectContext];
-                            if (antwortMoeglichkeit && ![antwortMoeglichkeit isKindOfClass:[NSNull class]]) neueAntwort.antwortKurz = antwortMoeglichkeit;
-                            if (loesungString && ![loesungString isKindOfClass:[NSNull class]]) neueAntwort.antwortLangfassung = loesungString; //die Langfassung der Antwort
+                        //Antworten für diese Frage auslesen und einer Frage zuordnen, danach importieren
+                        NSArray *antworten = [eineFrage objectForKey:@"answers"];
+                        
+                        for (NSDictionary *eineAntwort in antworten) {
+                            //Daten aus Dictionary lesen
+                            NSInteger antwortID = [[eineAntwort objectForKey:@"id"]integerValue];
+                            BOOL richtigeAntwort = [[eineAntwort objectForKey:@"truth"]boolValue];
                             
-                            //setzten, ob die Antwortmöglichkeit richtig ist oder falsch
-                            neueAntwort.richtig = [NSNumber numberWithBool:richtigeAntwort];
+                            NSString *loesungString = [eineAntwort objectForKey:@"description"]; //die Beschreibung der Lösung für die Frage, die auf Wunsch des Users angezeigt werden kann (Lange Antwort)
+                            
+                            NSString *antwortMoeglichkeit = [eineAntwort objectForKey:@"text"]; //die Antwortmöglichkeiten für diese Antwort der Frage (kurze Antwort)
+                            
+                            //nur wenn die oben erstellt neue Frage auch vorhanden ist
+                            if (neueFrage) {
+                                //überprüfen, ob die lokal gespeicherte Frage bereits eine Antwort mit der antwortID hat
+                                Antwort *antwortToEdit = nil; //die Antwort, die "bearbeitet" werden soll
+                                
+                                if (neueFrage.antworten.count > 0) {
+                                    for (Antwort *vorhandeneAntwort in neueFrage.antworten) {
+                                        if (vorhandeneAntwort.antwortID.integerValue == antwortID) {
+                                            antwortToEdit = vorhandeneAntwort; //dann die vorhandene Antwort bearbeiten
+                                            break; //und die Schleife abbrechen
+                                        }
+                                    }
+                                }
+                                
+                                //wenn jetzt noch also keine vorhandene Antwort gefunden wurde, erstelle eine neue
+                                if (!antwortToEdit) {
+                                    //eine neue Antwort erstellen --> diese Antwort der Frage zuweisen
+                                    antwortToEdit = [Antwort neueAntwortFuerFrage:neueFrage inManagedObjectContext:neueFrage.managedObjectContext];
+                                }
+                                
+                                
+                                //die Antwort bearbeiten bzw. der neu erstellten Antwort die entsprechenden Werte zuweisen
+                                if (antwortMoeglichkeit && ![antwortMoeglichkeit isKindOfClass:[NSNull class]]) antwortToEdit.antwortKurz = antwortMoeglichkeit;
+                                if (loesungString && ![loesungString isKindOfClass:[NSNull class]]) antwortToEdit.antwortLangfassung = loesungString; //die Langfassung der Antwort
+                                
+                                //setzten, ob die Antwortmöglichkeit richtig ist oder falsch
+                                antwortToEdit.richtig = [NSNumber numberWithBool:richtigeAntwort];
+                            }
                         }
                     }
                 }
+                
+                
+                //das Datum der letzten Aktualisierung des Quizzes setzen
+                self.user.quizLastUpdate = [NSDate date];
+                
+                //managedObjectContext speichern
+                NSError *savingError;
+                [self.user.managedObjectContext save:&savingError];
+                
+                if (savingError) {
+                    //poste eine Notification, mit deren Hilfe andere Objekte den Fehler anzeigen lassen -können-
+                    [[NSNotificationCenter defaultCenter]postNotificationName:QuizControllerUpdateFailed object:self userInfo:@{NSLocalizedFailureReasonErrorKey : savingError.localizedDescription}];
+                }
+                else {
+                    //poste eine Notification, die angibt, dass das Update der Daten erfolgreich war
+                    [[NSNotificationCenter defaultCenter]postNotificationName:QuizControllerDidRefreshQuestions object:self userInfo:nil];
+                }
+                
             }
-            
-            
-            //das Datum der letzten Aktualisierung des Quizzes setzen
-            self.user.quizLastUpdate = [NSDate date];
-            
-            //managedObjectContext speichern
-            NSError *savingError;
-            [self.user.managedObjectContext save:&savingError];
-            
-            if (savingError) {
-                //poste eine Notification, mit deren Hilfe andere Objekte den Fehler anzeigen lassen -können-
-                [[NSNotificationCenter defaultCenter]postNotificationName:QuizControllerUpdateFailed object:self userInfo:@{NSLocalizedFailureReasonErrorKey : savingError.localizedDescription}];
-            }
-            else {
-                //poste eine Notification, die angibt, dass das Update der Daten erfolgreich war
-                [[NSNotificationCenter defaultCenter]postNotificationName:QuizControllerDidRefreshQuestions object:self userInfo:nil];
-            }
-            
         }
-    }
-    else {
-        //Fehler oder keine Daten --> später erneut versuchen
-        //Fehler anzeigen --> die Notification posten
-        [[NSNotificationCenter defaultCenter]postNotificationName:QuizControllerUpdateFailed object:self userInfo:@{NSLocalizedFailureReasonErrorKey : error.localizedDescription}];
-    }
+        else {
+            //Fehler oder keine Daten --> später erneut versuchen
+            //Fehler anzeigen --> die Notification posten
+            [[NSNotificationCenter defaultCenter]postNotificationName:QuizControllerUpdateFailed object:self userInfo:@{NSLocalizedFailureReasonErrorKey : error.localizedDescription}];
+        }
+    });
 }
 
 ///den Download der aktuellen Fragen abbrechen
@@ -224,7 +246,7 @@
         //Fehler beim Löschen
         NSLog(@"Fehler beim Löschen aller Antworten");
     }
-
+    
     
     
     //alle Fragen löschen
@@ -333,7 +355,7 @@
     else {
         return fetchedObjects;
     }
-
+    
 }
 
 - (NSArray<Frage *> *)alleFalschenFragen {
@@ -377,7 +399,7 @@
     else {
         return fetchedObjects;
     }
-
+    
 }
 
 - (NSInteger)punktestand {
@@ -399,16 +421,16 @@
         //Handle error
         return  0;
     }
-
+    
     return count;
 }
 
 - (NSFetchRequest *)alleKurseMitFragenFetchedRequest {
-
+    
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Kurs" inManagedObjectContext:self.user.managedObjectContext];
     [fetchRequest setEntity:entity];
-
+    
     // Specify criteria for filtering which objects to fetch
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"user == %@ AND aktiv == YES AND ANY fragen.id >= 0", self.user]; //letzter Teil des Predicates sorgt dafür, dass nur die Kurse angezeigt werden, für die auch Fragen verfügbar sind
     [fetchRequest setPredicate:predicate];

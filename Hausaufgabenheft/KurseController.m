@@ -71,7 +71,8 @@
     [fetchRequest setEntity:entity];
     
     // Specify criteria for filtering which objects to fetch
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"user==%@ AND aktiv == YES", self.associatedUser];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"user==%@ AND aktiv == YES AND archiviert == NO", self.associatedUser]; //alle aktiven Kurse (in diesem Fall ohne die archivierten Kurse)
+    
     [fetchRequest setPredicate:predicate];
     
     
