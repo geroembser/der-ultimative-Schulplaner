@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15D21" minimumToolsVersion="Automatic">
+    <entity name="Antwort" representedClassName="Antwort" syncable="YES">
+        <attribute name="antwortID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="antwortKurz" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="antwortLangfassung" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="richtig" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <relationship name="frage" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Frage" inverseName="antworten" inverseEntity="Frage" syncable="YES"/>
+    </entity>
+    <entity name="Aufgabe" representedClassName="Aufgabe" syncable="YES">
+        <attribute name="abgabeDatum" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="beschreibung" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="erinnerungDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="erledigt" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="erstelltAm" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="keinemFachZugeordnet" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
+        <attribute name="mediaFilesPath" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="notizen" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="prioritaet" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="titel" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="typ" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="zuletztAktualisiert" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="kurs" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Kurs" inverseName="aufgaben" inverseEntity="Kurs" syncable="YES"/>
+        <relationship name="mediaFiles" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MediaFile" inverseName="aufgabe" inverseEntity="MediaFile" syncable="YES"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="aufgaben" inverseEntity="User" syncable="YES"/>
+    </entity>
+    <entity name="Fach" representedClassName="Fach" syncable="YES">
+        <attribute name="kuerzel" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Frage" representedClassName="Frage" syncable="YES">
+        <attribute name="anzahlFalschBeantwortet" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="anzahlRichtigBeantwortet" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="dateLetzteRichtigeAntwort" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="frage" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="hinzugefuegtAm" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="imageURL" optional="YES" attributeType="String" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="schwierigkeit" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="zuletztAktualisiert" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="antworten" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Antwort" inverseName="frage" inverseEntity="Antwort" syncable="YES"/>
+        <relationship name="kurs" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Kurs" inverseName="fragen" inverseEntity="Kurs" syncable="YES"/>
+        <relationship name="themenbereich" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Themenbereich" inverseName="fragen" inverseEntity="Themenbereich" syncable="YES"/>
+    </entity>
+    <entity name="Klausur" representedClassName="Klausur" syncable="YES">
+        <attribute name="dauer" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="nachschreibetermin" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="notizen" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="restkursFrei" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="zeit" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="aufsicht" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Klausuraufsicht" inverseName="klausur" inverseEntity="Klausuraufsicht" syncable="YES"/>
+        <relationship name="kurs" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Kurs" inverseName="klausuren" inverseEntity="Kurs" syncable="YES"/>
+        <relationship name="note" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Note" inverseName="klausur" inverseEntity="Note" syncable="YES"/>
+        <relationship name="raum" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Raum" inverseName="klausuren" inverseEntity="Raum" syncable="YES"/>
+    </entity>
+    <entity name="Klausuraufsicht" representedClassName="Klausuraufsicht" syncable="YES">
+        <attribute name="fromDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="toDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="klausur" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Klausur" inverseName="aufsicht" inverseEntity="Klausur" syncable="YES"/>
+        <relationship name="lehrer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Lehrer" inverseName="aufsichten" inverseEntity="Lehrer" syncable="YES"/>
+    </entity>
+    <entity name="Kurs" representedClassName="Kurs" syncable="YES">
+        <attribute name="aktiv" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="archiviert" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="blocknummer" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="fach" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="geaendertAm" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="hinzugefuegtAm" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="icon" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="kursart" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="schriftlich" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="schuljahr" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="aufgaben" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Aufgabe" inverseName="kurs" inverseEntity="Aufgabe" syncable="YES"/>
+        <relationship name="fragen" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Frage" inverseName="kurs" inverseEntity="Frage" syncable="YES"/>
+        <relationship name="klausuren" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Klausur" inverseName="kurs" inverseEntity="Klausur" syncable="YES"/>
+        <relationship name="lehrer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Lehrer" inverseName="kurse" inverseEntity="Lehrer" syncable="YES"/>
+        <relationship name="noten" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Note" inverseName="kurs" inverseEntity="Note" syncable="YES"/>
+        <relationship name="stunden" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Schulstunde" inverseName="kurs" inverseEntity="Schulstunde" syncable="YES"/>
+        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="WebsiteTag" inverseName="kurse" inverseEntity="WebsiteTag" syncable="YES"/>
+        <relationship name="themenbereiche" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Themenbereich" inverseName="kurs" inverseEntity="Themenbereich" syncable="YES"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="kurse" inverseEntity="User" syncable="YES"/>
+    </entity>
+    <entity name="Lehrer" representedClassName="Lehrer" syncable="YES">
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="faecher" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="kuerzel" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="titel" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="vorname" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="aufsichten" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Klausuraufsicht" inverseName="lehrer" inverseEntity="Klausuraufsicht" syncable="YES"/>
+        <relationship name="kurse" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Kurs" inverseName="lehrer" inverseEntity="Kurs" syncable="YES"/>
+        <relationship name="stunden" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Schulstunde" inverseName="lehrer" inverseEntity="Schulstunde" syncable="YES"/>
+        <relationship name="vertretungen" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Vertretung" inverseName="vertretungslehrer" inverseEntity="Vertretung" syncable="YES"/>
+    </entity>
+    <entity name="MediaFile" representedClassName="MediaFile" syncable="YES">
+        <attribute name="hinzugefuegtAm" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="path" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="typ" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="aufgabe" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Aufgabe" inverseName="mediaFiles" inverseEntity="Aufgabe" syncable="YES"/>
+    </entity>
+    <entity name="Mitteilung" representedClassName="Mitteilung" syncable="YES">
+        <attribute name="datum" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="letzteLokaleAenderung" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="lokalHinzugefuegtAm" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="nachricht" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="stufen" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="titel" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="mitteilungen" inverseEntity="User" syncable="YES"/>
+    </entity>
+    <entity name="Note" representedClassName="Note" syncable="YES">
+        <attribute name="beschreibung" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="hinzugefuegtAm" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="klassendurchschnitt" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="punkte" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="schriftlich" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <relationship name="klausur" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Klausur" inverseName="note" inverseEntity="Klausur" syncable="YES"/>
+        <relationship name="kurs" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Kurs" inverseName="noten" inverseEntity="Kurs" syncable="YES"/>
+    </entity>
+    <entity name="Raum" representedClassName="Raum" syncable="YES">
+        <attribute name="beamer" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="beschreibung" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="computer" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="funktion" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="kapazitaet" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="lautsprecher" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="nummer" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="klausuren" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Klausur" inverseName="raum" inverseEntity="Klausur" syncable="YES"/>
+        <relationship name="stunden" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Schulstunde" inverseName="raum" inverseEntity="Schulstunde" syncable="YES"/>
+    </entity>
+    <entity name="Schulstunde" representedClassName="Schulstunde" syncable="YES">
+        <attribute name="beginn" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="blocknummer" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="dauer" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="ende" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="geaendertAm" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="hinzugefuegtAm" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="kursID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="raumnummer" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sonstiges" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="wochentag" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="kurs" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Kurs" inverseName="stunden" inverseEntity="Kurs" syncable="YES"/>
+        <relationship name="lehrer" maxCount="1" deletionRule="Nullify" destinationEntity="Lehrer" inverseName="stunden" inverseEntity="Lehrer" syncable="YES"/>
+        <relationship name="raum" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Raum" inverseName="stunden" inverseEntity="Raum" syncable="YES"/>
+        <relationship name="vertretungen" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Vertretung" inverseName="schulstunde" inverseEntity="Vertretung" syncable="YES"/>
+    </entity>
+    <entity name="Termin" representedClassName="Termin" syncable="YES">
+        <attribute name="beschaeftigt" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="erinnerung" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="hinzugefuegtAm" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="quelle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="schulfrei" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="terminID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="zuletztAktualisiert" optional="YES" attributeType="Date" syncable="YES"/>
+    </entity>
+    <entity name="Themenbereich" representedClassName="Themenbereich" syncable="YES">
+        <attribute name="beschreibung" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="zuletztAktualisiert" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="fragen" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Frage" inverseName="themenbereich" inverseEntity="Frage" syncable="YES"/>
+        <relationship name="kurs" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Kurs" inverseName="themenbereiche" inverseEntity="Kurs" syncable="YES"/>
+    </entity>
+    <entity name="User" representedClassName="User" syncable="YES">
+        <attribute name="benutzername" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="blocked" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="eingerichtet" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="geburtstag" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="lastAppOpen" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="lastDataUpdate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="lastMitteilungenUpdate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="lastServerConnection" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="lastVertretungsplanConnection" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="lastVertretungsplanUpdate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="loggedIn" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="nachname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="quizLastUpdate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="quizPunkte" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="schuljahr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="stufe" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="validData" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="vorname" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="aufgaben" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Aufgabe" inverseName="user" inverseEntity="Aufgabe" syncable="YES"/>
+        <relationship name="kurse" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Kurs" inverseName="user" inverseEntity="Kurs" syncable="YES"/>
+        <relationship name="mitteilungen" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Mitteilung" inverseName="user" inverseEntity="Mitteilung" syncable="YES"/>
+        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="WebsiteTag" inverseName="user" inverseEntity="WebsiteTag" syncable="YES"/>
+    </entity>
+    <entity name="Vertretung" representedClassName="Vertretung" syncable="YES">
+        <attribute name="art" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="artBitfields" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="datum" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="eva" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="hinzugefuegtAm" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="kursID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="letzteAenderung" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="notiz" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="raum" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="schulstunde" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Schulstunde" inverseName="vertretungen" inverseEntity="Schulstunde" syncable="YES"/>
+        <relationship name="vertretungslehrer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Lehrer" inverseName="vertretungen" inverseEntity="Lehrer" syncable="YES"/>
+    </entity>
+    <entity name="WebsiteTag" representedClassName="WebsiteTag" syncable="YES">
+        <attribute name="hinzugefuegtAm" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="relevanz" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="tag" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="vorkommenBeiAktivenKursen" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <relationship name="kurse" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Kurs" inverseName="tags" inverseEntity="Kurs" syncable="YES"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="tags" inverseEntity="User" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Antwort" positionX="-3591" positionY="173" width="128" height="120"/>
+        <element name="Aufgabe" positionX="-2412" positionY="-145" width="137" height="268"/>
+        <element name="Fach" positionX="-3303" positionY="-549" width="128" height="73"/>
+        <element name="Frage" positionX="-3384" positionY="191" width="128" height="225"/>
+        <element name="Klausur" positionX="-2513" positionY="-691" width="128" height="178"/>
+        <element name="Klausuraufsicht" positionX="-2853" positionY="-702" width="128" height="103"/>
+        <element name="Kurs" positionX="-2691" positionY="-493" width="128" height="358"/>
+        <element name="Lehrer" positionX="-2990" positionY="-477" width="128" height="193"/>
+        <element name="MediaFile" positionX="-2205" positionY="-126" width="128" height="103"/>
+        <element name="Mitteilung" positionX="-3591" positionY="-241" width="128" height="163"/>
+        <element name="Note" positionX="-2216" positionY="-603" width="128" height="148"/>
+        <element name="Raum" positionX="-2250" positionY="-405" width="128" height="178"/>
+        <element name="Schulstunde" positionX="-2765" positionY="-112" width="128" height="253"/>
+        <element name="Termin" positionX="-3105" positionY="-19" width="128" height="163"/>
+        <element name="Themenbereich" positionX="-3071" positionY="314" width="128" height="135"/>
+        <element name="User" positionX="-3170" positionY="-324" width="128" height="373"/>
+        <element name="Vertretung" positionX="-2594" positionY="146" width="128" height="210"/>
+        <element name="WebsiteTag" positionX="-2349" positionY="-900" width="128" height="133"/>
+    </elements>
+</model>
